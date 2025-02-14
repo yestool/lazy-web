@@ -1,0 +1,21 @@
+{
+  "require": {
+    "twig/twig": "^3.0",
+    "slim/slim": "^4.0",
+    "php-di/php-di": "^6.0",
+    "nyholm/psr7": "^1.8",
+    "nyholm/psr7-server": "^1.1",
+    "slim/twig-view": "^3.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "config": {
+    "process-timeout": 0
+  },
+  "scripts": {
+    "start": "php -S localhost:8080 -t public/"
+  }
+}
