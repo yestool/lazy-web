@@ -1,16 +1,23 @@
 <?php
 use Slim\App;
-use App\Controllers\HomeController;
-use App\Controllers\UserController;
+
 
 return function (App $app) {
-    $app->get('/', [HomeController::class, 'index'])->setName('home.index');
-    $app->get('/users', [UserController::class, 'index'])->setName('users.index');
+    $app->get('/', [\App\Controllers\HomeController::class, 'index'])->setName('home.index');
+    $app->get('/users', [\App\Controllers\UserController::class, 'index'])->setName('users.index');
 
-    $app->get('/users/create', UserController::class . ':create');
-    $app->post('/users', UserController::class . ':store');
-    $app->get('/users/{id}',UserController::class . ':show');
-    $app->get('/users/{id}/edit', UserController::class . ':edit');
-    $app->put('/users/{id}', UserController::class . ':update');
-    $app->delete('/users/{id}', UserController::class . ':delete');
+    $app->get('/users/create', \App\Controllers\UserController::class . ':create');
+    $app->post('/users', \App\Controllers\UserController::class . ':store');
+    $app->get('/users/{id}',\App\Controllers\UserController::class . ':show');
+    $app->get('/users/{id}/edit', \App\Controllers\UserController::class . ':edit');
+    $app->put('/users/{id}', \App\Controllers\UserController::class . ':update');
+    $app->delete('/users/{id}', \App\Controllers\UserController::class . ':delete');
+
+    $app->get('/admin', \App\Controllers\AdminController::class . ':index')->setName('admin.index');
+    $app->get('/admin/login', \App\Controllers\AdminController::class . ':login')->setName('admin.login');
+    $app->get('/admin/forms', \App\Controllers\AdminController::class . ':forms')->setName('admin.forms');
+    $app->get('/admin/tables', \App\Controllers\AdminController::class . ':tables')->setName('admin.tables');
+    $app->get('/admin/modals', \App\Controllers\AdminController::class . ':modals')->setName('admin.modals');
+    $app->get('/admin/buttons', \App\Controllers\AdminController::class . ':buttons')->setName('admin.buttons');
+    $app->get('/admin/ui', \App\Controllers\AdminController::class . ':ui')->setName('admin.ui');
 };

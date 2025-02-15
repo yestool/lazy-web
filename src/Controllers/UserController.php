@@ -9,12 +9,11 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 final class UserController extends Controller
 {
-  private UserService $userService;
+  public function __construct(
+    protected Twig $twig,
+    private UserService $userService,
+  ) {
 
-  public function __construct(UserService $userService, Twig $twig)
-  {
-    $this->userService = $userService;
-    $this->twig = $twig;
   }
 
   public function index(Request $request, Response $response): Response

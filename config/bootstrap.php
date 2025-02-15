@@ -11,8 +11,5 @@ $container = (new ContainerBuilder())
     ->addDefinitions(__DIR__ . '/container.php')
     ->build();
 
-
-
-
 // Create App instance
 return $container->get(App::class);

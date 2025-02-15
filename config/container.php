@@ -11,20 +11,8 @@ return [
     'settings' => function () {
         return require __DIR__ . '/settings.php';
     },
-
     App::class => function (ContainerInterface $container) {
-        $container->set(PDO::class, function () {
-            $pdo = new PDO('sqlite:' . __DIR__ . '/../database/database.sqlite');
-            return $pdo;
-        });
-
-        $container->set(Twig::class, function (ContainerInterface $container) {
-            $twig = Twig::create(__DIR__ . '/../templates', ['cache' => false]);
-            return $twig;
-        });
-
         $app = AppFactory::createFromContainer($container);
-
         // Register routes
         (require __DIR__ . '/routes.php')($app);
 
@@ -32,5 +20,13 @@ return [
         (require __DIR__ . '/middleware.php')($app);
 
         return $app;
+    },
+    PDO::class => function () {
+        $pdo = new PDO('sqlite:' . __DIR__ . '/../database/database.sqlite');
+        return $pdo;
+    },
+    Twig::class => function () {
+        $twig = Twig::create(__DIR__ . '/../templates', ['cache' => false]);
+        return $twig;
     }
 ];
