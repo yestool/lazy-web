@@ -17,10 +17,4 @@ return function (App $app) {
 
     // Handle exceptions
     $app->addErrorMiddleware(true, true, true);
-
-                // Create Twig
-                $twig = Twig::create(__DIR__ . '/../templates', ['cache' => false]);
-
-                // Add Twig-View Middleware
-                $app->add(TwigMiddleware::create($app, $twig));
 };

@@ -15,8 +15,26 @@ class UserService
 
   public function getAllUsers()
   {
-    return $this->user->getAll();
+    return $this->user->all();
   }
 
-  // 其他CRUD方法类似实现
+  public function getUserById($id)
+    {
+        return $this->user->find($id);
+    }
+
+    public function createUser($data)
+    {
+        return $this->user->create($data);
+    }
+
+    public function updateUser($id, $data)
+    {
+        return $this->user->update($id, $data);
+    }
+
+    public function deleteUser($id)
+    {
+        return $this->user->delete($id);
+    }
 }

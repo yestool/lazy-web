@@ -4,6 +4,8 @@ use Psr\Container\ContainerInterface;
 use Slim\App;
 use PDO;
 use Slim\Factory\AppFactory;
+use Slim\Views\Twig;
+use App\Controllers;
 
 return [
     'settings' => function () {
@@ -11,11 +13,14 @@ return [
     },
 
     App::class => function (ContainerInterface $container) {
-
-
         $container->set(PDO::class, function () {
             $pdo = new PDO('sqlite:' . __DIR__ . '/../database/database.sqlite');
             return $pdo;
+        });
+
+        $container->set(Twig::class, function (ContainerInterface $container) {
+            $twig = Twig::create(__DIR__ . '/../templates', ['cache' => false]);
+            return $twig;
         });
 
         $app = AppFactory::createFromContainer($container);
@@ -27,5 +32,5 @@ return [
         (require __DIR__ . '/middleware.php')($app);
 
         return $app;
-    },
+    }
 ];
