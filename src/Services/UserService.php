@@ -12,6 +12,10 @@ class UserService
   {
     $this->user = $user;
   }
+  public function getUserByEmail($email)
+  {
+    return $this->user->getUserByEmail($email);
+  }
 
   public function getAllUsers()
   {

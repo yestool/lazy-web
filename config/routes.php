@@ -1,5 +1,6 @@
 <?php
 use Slim\App;
+use App\Middlewares\AuthMiddleware;
 
 
 return function (App $app) {
@@ -13,11 +14,25 @@ return function (App $app) {
     $app->put('/users/{id}', \App\Controllers\UserController::class . ':update');
     $app->delete('/users/{id}', \App\Controllers\UserController::class . ':delete');
 
-    $app->get('/admin', \App\Controllers\AdminController::class . ':index')->setName('admin.index');
-    $app->get('/admin/login', \App\Controllers\AdminController::class . ':login')->setName('admin.login');
-    $app->get('/admin/forms', \App\Controllers\AdminController::class . ':forms')->setName('admin.forms');
-    $app->get('/admin/tables', \App\Controllers\AdminController::class . ':tables')->setName('admin.tables');
-    $app->get('/admin/modals', \App\Controllers\AdminController::class . ':modals')->setName('admin.modals');
-    $app->get('/admin/buttons', \App\Controllers\AdminController::class . ':buttons')->setName('admin.buttons');
-    $app->get('/admin/ui', \App\Controllers\AdminController::class . ':ui')->setName('admin.ui');
+    //$app->get('/admin', \App\Controllers\AdminController::class . ':index')->setName('admin.index');
+    // $app->get('/admin/login', \App\Controllers\AdminController::class . ':login')->setName('admin.login');
+    // $app->get('/admin/forms', \App\Controllers\AdminController::class . ':forms')->setName('admin.forms');
+    // $app->get('/admin/tables', \App\Controllers\AdminController::class . ':tables')->setName('admin.tables');
+    // $app->get('/admin/modals', \App\Controllers\AdminController::class . ':modals')->setName('admin.modals');
+    // $app->get('/admin/buttons', \App\Controllers\AdminController::class . ':buttons')->setName('admin.buttons');
+    // $app->get('/admin/ui', \App\Controllers\AdminController::class . ':ui')->setName('admin.ui');
+
+    $app->get('/admin/login', [\App\Controllers\AuthController::class, 'gologin']);
+    $app->post('/admin/login', [\App\Controllers\AuthController::class, 'login']);
+    $app->get('/admin/logout', [\App\Controllers\AuthController::class, 'logout']);
+
+
+    $app->group('/admin', function($group) {
+        $group->get('', \App\Controllers\AdminController::class . ':index')->setName('admin.index');
+        $group->get('/forms', \App\Controllers\AdminController::class . ':forms')->setName('admin.forms');
+        $group->get('/tables', \App\Controllers\AdminController::class . ':tables')->setName('admin.tables');
+        $group->get('/modals', \App\Controllers\AdminController::class . ':modals')->setName('admin.modals');
+        $group->get('/buttons', \App\Controllers\AdminController::class . ':buttons')->setName('admin.buttons');
+        $group->get('/ui', \App\Controllers\AdminController::class . ':ui')->setName('admin.ui');
+    })->add(AuthMiddleware::class);
 };

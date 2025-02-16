@@ -5,10 +5,11 @@ use Slim\Middleware\MethodOverrideMiddleware;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 use Slim\Middleware\ErrorMiddleware;
-use Slim\Psr7\Response;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Exception\HttpException;
+use Odan\Session\Middleware\SessionStartMiddleware;
+use App\Middlewares\SessionMiddleware;
 
 return function (App $app) {
     // Parse json, form data and xml
@@ -19,6 +20,7 @@ return function (App $app) {
 
     $methodOverrideMiddleware = new MethodOverrideMiddleware();
     $app->add($methodOverrideMiddleware);
+
 
     $errorMiddleware = $app->addErrorMiddleware(true, true, true);
     $errorHandler = $errorMiddleware->getDefaultErrorHandler();
@@ -39,9 +41,17 @@ return function (App $app) {
                 'message' => 'The page you are looking for could not be found.'
             ])->withStatus(404);
         }
+        var_dump($exception);
         // For other errors, return the default error handler response
         return $errorHandler($request, $exception, $displayErrorDetails, $logErrors, $logErrorDetails);
     };
     // Handle 404 Not Found
     $errorMiddleware->setDefaultErrorHandler($customErrorHandler);
+
+    //$app->add(SessionMiddleware::class);
+
+    $app->add(SessionStartMiddleware::class);
+
+
+    
 };
