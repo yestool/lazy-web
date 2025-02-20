@@ -10,6 +10,7 @@ use Slim\Exception\HttpNotFoundException;
 use Slim\Exception\HttpException;
 use Odan\Session\Middleware\SessionStartMiddleware;
 use App\Middlewares\SessionMiddleware;
+use App\Middlewares\TrailingSlashMiddleware;
 
 return function (App $app) {
     // Parse json, form data and xml
@@ -17,6 +18,12 @@ return function (App $app) {
 
     // Add the Slim built-in routing middleware
     $app->addRoutingMiddleware();
+
+    $trailingSlashMiddleware = new TrailingSlashMiddleware(
+        ['/admin','/api'],
+    );
+
+    $app->add($trailingSlashMiddleware);
 
     $methodOverrideMiddleware = new MethodOverrideMiddleware();
     $app->add($methodOverrideMiddleware);

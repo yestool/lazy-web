@@ -2,7 +2,6 @@
 
 use Psr\Container\ContainerInterface;
 use Slim\App;
-use PDO;
 use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
 use Odan\Session\PhpSession;

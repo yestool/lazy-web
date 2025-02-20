@@ -23,9 +23,7 @@ class AuthController extends Controller
   public function gologin(Request $request, Response $response)
   {
     $user = $this->session->get('user');
-    $this->logger->info('User login attempt {email} ', [
-      'email' => $user['email']
-    ]);
+    
     if ($user) {
       return $this->redirect($response, '/admin');
     }

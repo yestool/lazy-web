@@ -5,12 +5,12 @@ use App\Middlewares\AuthMiddleware;
 
 return function (App $app) {
     $app->get('/', [\App\Controllers\HomeController::class, 'index'])->setName('home.index');
-    $app->get('/users', [\App\Controllers\UserController::class, 'index'])->setName('users.index');
+    $app->get('/users/', [\App\Controllers\UserController::class, 'index'])->setName('users.index');
 
-    $app->get('/users/create', \App\Controllers\UserController::class . ':create');
+    $app->get('/users/create/', \App\Controllers\UserController::class . ':create');
     $app->post('/users', \App\Controllers\UserController::class . ':store');
-    $app->get('/users/{id}',\App\Controllers\UserController::class . ':show');
-    $app->get('/users/{id}/edit', \App\Controllers\UserController::class . ':edit');
+    $app->get('/users/{id}/',\App\Controllers\UserController::class . ':show');
+    $app->get('/users/{id}/edit/', \App\Controllers\UserController::class . ':edit');
     $app->put('/users/{id}', \App\Controllers\UserController::class . ':update');
     $app->delete('/users/{id}', \App\Controllers\UserController::class . ':delete');
 
