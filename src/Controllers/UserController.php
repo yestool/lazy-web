@@ -30,6 +30,7 @@ final class UserController extends Controller
     public function store(Request $request, Response $response): Response
     {
         $data = $request->getParsedBody();
+        $data['password'] = 'admin';
         $this->userService->createUser($data);
         return $response->withHeader('Location', '/users')->withStatus(302);
     }

@@ -13,13 +13,6 @@ class SessionManager
         $this->session = $session;
     }
 
-    public function start(): void
-    {
-        if (!$this->session->isStarted()) {
-            $this->session->start();
-        }
-    }
-    
     // 设置session值
     public function set(string $key, $value): void
     {
@@ -39,9 +32,9 @@ class SessionManager
     }
     
     // 删除session值
-    public function remove(string $key): void
+    public function delete(string $key): void
     {
-        $this->session->remove($key);
+        $this->session->delete($key);
     }
     
     // 清除所有session
@@ -56,9 +49,10 @@ class SessionManager
         return $this->session->all();
     }
     
-    // 销毁session
-    public function destroy(): void
+    // 获取flash数据
+    public function getFlash()
     {
-        $this->session->destroy();
+        return $this->session->getFlash();
     }
+    
 }

@@ -8,6 +8,7 @@ use Odan\Session\SessionInterface;
 use Slim\Views\Twig;
 use App\Services\UserService;
 use Psr\Log\LoggerInterface;
+use App\Utils\PasswordUtils;
 
 class AuthController extends Controller
 {
@@ -23,11 +24,11 @@ class AuthController extends Controller
   public function gologin(Request $request, Response $response)
   {
     $user = $this->session->get('user');
-    
     if ($user) {
       return $this->redirect($response, '/admin');
     }
-    return $this->render($response, 'admin/login.twig');
+    $errorMsg = $this->session->getFlash()->get('error');
+    return $this->render($response, 'admin/login.twig', ['error' => $errorMsg]);
   }
 
   public function login(Request $request, Response $response)
@@ -37,22 +38,21 @@ class AuthController extends Controller
     $password = $data['password'];
     
     $user = $this->userService->getUserByEmail($email);
-    if ($user) {
+    if ($user && PasswordUtils::verifyPassword($password, $user['password'])) {
       $this->session->set('user', [
-        'id' => 1,
         'name' => $user['name'],
         'email' => $user['email']
       ]);
-        
       return $this->redirect($response, '/admin');
+    } else {
+      $this->session ->getFlash()->add('error', '用户名或密码错误');
     }
-    
-    return $this->redirect($response, '/admin/login?error=1');
+    return $this->redirect($response, '/admin/login');
   }
   
   public function logout(Request $request, Response $response)
   {
-    $this->session->destroy();
+    $this->session->clear();
     return $response->withHeader('Location', '/login')
                       ->withStatus(302);
   }

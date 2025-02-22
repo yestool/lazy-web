@@ -21,10 +21,6 @@ class SessionMiddleware implements MiddlewareInterface
         ServerRequestInterface $request, 
         RequestHandlerInterface $handler
     ): ResponseInterface {
-        if (!$this->session->isStarted()) {
-            $this->session->start();
-        }
-        
         return $handler->handle($request);
     }
 }

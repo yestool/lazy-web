@@ -17,11 +17,11 @@ try {
     $sql = file_get_contents($sqlPath);
 
     // 执行 SQL 语句
-    //$res = $db->exec($sql) ;
+    $res = $db->exec($sql) ;
 
-    $stmt = $db->query("SELECT * FROM users");
-    $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo "执行结果:" . json_encode($res) . "\n";
+    // $stmt = $db->query("SELECT * FROM users");
+    // $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // echo "执行结果:" . json_encode($res) . "\n";
 
     echo "数据库初始化成功！\n";
 

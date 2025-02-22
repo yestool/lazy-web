@@ -3,9 +3,17 @@
 namespace App\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Odan\Session\SessionInterface;
+use Slim\Views\Twig;
+use Psr\Log\LoggerInterface;
 
 final class AdminController extends Controller
 {
+    public function __construct(
+        protected Twig $twig,
+        private SessionInterface $session,
+        private LoggerInterface $logger
+    ) {}
 
   public function index(Request $request, Response $response): Response
   {
@@ -40,6 +48,6 @@ final class AdminController extends Controller
 
   public function login(Request $request, Response $response): Response
   {
-      return $this->render($response, 'admin/login.twig');
+    return $this->render($response, 'admin/login.twig');
   }
 }

@@ -36,10 +36,6 @@ return [
         $pdo = new PDO('sqlite:' . __DIR__ . '/../database/database.sqlite');
         return $pdo;
     },
-    Twig::class => function () {
-        $twig = Twig::create(__DIR__ . '/../templates', ['cache' => false]);
-        return $twig;
-    },
     SessionInterface::class => function (ContainerInterface $container) {
         $session_config = $container->get('sessionConfig');
         // 创建session实例
@@ -62,7 +58,11 @@ return [
     SessionManagerInterface::class => function (ContainerInterface $container) {
         return $container->get(SessionInterface::class);
     },
-    
+    Twig::class => function (ContainerInterface $container) {
+        $twig = Twig::create(__DIR__ . '/../templates', ['cache' => false]);
+        $twig->getEnvironment()->addGlobal('session', $container->get(SessionInterface::class));
+        return $twig;
+    },
     AuthMiddleware::class => function (ContainerInterface $container) {
         return new AuthMiddleware(
             $container->get(SessionInterface::class),
