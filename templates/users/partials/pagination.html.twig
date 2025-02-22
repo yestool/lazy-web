@@ -1,0 +1,49 @@
+{% if total_pages > 1 %}
+    <div id="pagination-links" class="p-3" hx-boost="true" hx-target="#table-container" class="flex justify-center mt-4 space-x-2">
+        {% if current_page > 1 %}
+            <button class="px-4 py-2 bg-blue-500 text-white rounded-md" hx-get="/users/?page={{ current_page - 1 }}">上一页</button>
+        {% endif %}
+
+        {% if total_pages <= 5 %}
+            {% for page in 1..total_pages %}
+                {% if page == current_page %}
+                    <button class="px-4 py-2 bg-blue-500 text-white rounded-md" disabled>{{ page }}</button>
+                {% else %}
+                    <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md" hx-get="/users/?page={{ page }}">{{ page }}</button>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% if current_page == 1 %}
+                <button class="px-4 py-2 bg-blue-500 text-white rounded-md" disabled>1</button>
+            {% else %}
+                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md" hx-get="/users/?page=1">1</button>
+            {% endif %}
+
+            {% if current_page > 4 %}
+                <span class="px-4 py-2">...</span>
+            {% endif %}
+
+            {% for page in (current_page - 2 > 1 ? current_page - 2 : 2)..(current_page + 2 < total_pages ? current_page + 2 : total_pages - 1) %}
+                {% if page == current_page %}
+                    <button class="px-4 py-2 bg-blue-500 text-white rounded-md" disabled>{{ page }}</button>
+                {% else %}
+                    <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md" hx-get="/users/?page={{ page }}" >{{ page }}</button>
+                {% endif %}
+            {% endfor %}
+
+            {% if current_page < total_pages - 3 %}
+                <span class="px-4 py-2">...</span>
+            {% endif %}
+
+            {% if current_page == total_pages %}
+                <button class="px-4 py-2 bg-blue-500 text-white rounded-md" disabled>{{ total_pages }}</button>
+            {% else %}
+                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md" hx-get="/users/?page={{ total_pages }}" >{{ total_pages }}</button>
+            {% endif %}
+        {% endif %}
+
+        {% if current_page < total_pages %}
+            <button class="px-4 py-2 bg-blue-500 text-white rounded-md" hx-get="/users/?page={{ current_page + 1 }}">下一页</button>
+        {% endif %}
+    </div>
+{% endif %}

@@ -10,6 +10,7 @@ use Odan\Session\SessionManagerInterface;
 use App\Middlewares\AuthMiddleware;
 use Psr\Log\LoggerInterface;
 use App\Utils\ConsoleLogger;
+use App\Extensions\TwigExtension;
 
 return [
     'settings' => function () {
@@ -60,6 +61,7 @@ return [
     },
     Twig::class => function (ContainerInterface $container) {
         $twig = Twig::create(__DIR__ . '/../templates', ['cache' => false]);
+        $twig->addExtension(new TwigExtension());
         $twig->getEnvironment()->addGlobal('session', $container->get(SessionInterface::class));
         return $twig;
     },

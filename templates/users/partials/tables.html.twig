@@ -1,0 +1,30 @@
+<div id="table-container" hx-get="/users/?page={{ page }}" hx-trigger="loadContacts from:body">
+  <table id="contacts-table" class="table-auto w-full">
+    <thead>
+        <th class="px-4 py-2 border text-left">Name</th>
+        <th class="px-4 py-2 border text-left">Email</th>
+        <th class="px-4 py-2 border text-left">Actions</th>
+    </thead>
+    <tbody id="contacts-table-body">
+        {% for user in users %} 
+            <tr id="contact-{{ user.id }}">
+                <td class="px-4 py-2 border">{{ user.name }}</td>
+                <td class="px-4 py-2 border">{{ user.email }}</td>
+                <td class="px-4 py-2 border ">
+                    <a class="mr-1 uppercase hover:underline" 
+                    href="/users/{{ user.id }}/" hx-get="/users/{{ user.id }}/" >View</a>
+                    <a class="mr-1 uppercase hover:underline" 
+                    href="/users/{{ user.id }}/edit/" >Edit</a>
+                    <a class="mr-1 uppercase hover:underline" 
+                    hx-delete="/users/{{ user.id }}" 
+                    hx-confirm="Are you sure you want to delete this contact?"
+                    hx-headers='{"X-CSRF-TOKEN": "323232323"}'>Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+
+  </table>  
+
+  {% include 'users/partials/pagination.html.twig' %}
+</div>

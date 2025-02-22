@@ -41,4 +41,15 @@ class UserService
     {
         return $this->user->delete($id);
     }
+    /**
+     * 分页获取用户列表
+     * 
+     * @param int $page 当前页码
+     * @param int $perPage 每页显示数量
+     * @return array 包含用户数据和分页信息
+     */
+    public function paginate(int $page = 1, int $perPage = 10): array
+    {
+      return $this->user->paginate($page, $perPage);
+    }
 }

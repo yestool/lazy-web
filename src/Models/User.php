@@ -28,6 +28,11 @@ class User
     $this->db = $db;
   }
 
+  public function getDb(): PDO
+  {
+    return $this->db;
+  }
+
   public function all()
     {
         $stmt = $this->db->query("SELECT * FROM users WHERE yn=1");
@@ -67,5 +72,26 @@ class User
         $stmt = $this->db->prepare("SELECT * FROM users WHERE yn=1 and  email = :email");
         $stmt->execute(['email' => $email]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function paginate(int $page = 1, int $perPage = 10): array
+    {
+        $offset = ($page - 1) * $perPage;
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE yn=1 LIMIT :limit OFFSET :offset");
+        $stmt->execute(['limit' => $perPage, 'offset' => $offset]);
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // 获取总记录数
+        $totalStmt = $this->db->query("SELECT COUNT(*) FROM users WHERE yn=1");
+        $total = $totalStmt->fetchColumn();
+
+        return [
+            'data' => $users,
+            'pagination' => [
+                'total' => $total,
+                'per_page' => $perPage,
+                'current_page' => $page,
+                'last_page' => ceil($total / $perPage)
+            ]
+        ];
     }
 }
