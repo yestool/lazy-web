@@ -69,4 +69,17 @@ final class PostController extends Controller
   {
     return $this->render($response, 'admin/login.twig');
   }
+
+  public function create(Request $request, Response $response): Response
+  {
+      return $this->render($response, 'admin/post/create.html.twig');
+  }
+
+  public function store(Request $request, Response $response): Response
+  {
+      $data = $request->getParsedBody();
+      // $data['password'] = 'admin'; // Post 不需要密码
+      $this->postService->createPost($data); // 假设 PostService 中有 createPost 方法
+      return $response->withHeader('Location', '/admin/posts')->withStatus(302);
+  }
 }

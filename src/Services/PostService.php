@@ -41,6 +41,11 @@ class PostService
     {
         return $this->post->delete($id);
     }
+
+    public function createPost($data)
+    {
+        return $this->post->create($data);
+    }
     /**
      * 分页获取用户列表
      * 
