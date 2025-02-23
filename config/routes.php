@@ -34,5 +34,8 @@ return function (App $app) {
         $group->get('/modals', \App\Controllers\AdminController::class . ':modals')->setName('admin.modals');
         $group->get('/buttons', \App\Controllers\AdminController::class . ':buttons')->setName('admin.buttons');
         $group->get('/ui', \App\Controllers\AdminController::class . ':ui')->setName('admin.ui');
+        $group->group('/post', function($group) {
+            $group->get('', \App\Controllers\Admin\PostController::class. ':index')->setName('admin.posts.index');
+        });
     })->add(AuthMiddleware::class);
 };

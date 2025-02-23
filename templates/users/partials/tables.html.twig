@@ -1,4 +1,4 @@
-<div id="table-container" hx-get="/users/?page={{ page }}" hx-trigger="loadContacts from:body">
+<div id="table-container" hx-get="/users/?page={{ current_page }}" hx-trigger="loadContacts from:body">
   <table id="contacts-table" class="table-auto w-full">
     <thead>
         <th class="px-4 py-2 border text-left">Name</th>
@@ -23,8 +23,6 @@
             </tr>
         {% endfor %}
     </tbody>
-
   </table>  
-
   {% include 'users/partials/pagination.html.twig' %}
 </div>

@@ -37,7 +37,7 @@ return function (App $app) {
         bool $displayErrorDetails,
         bool $logErrors,
         bool $logErrorDetails
-    ) use ($app) {
+    ) use ($app, $errorHandler) {
         $response = $app->getResponseFactory()->createResponse();
         // Check if the error is a 404
         if ($exception instanceof HttpNotFoundException) {
@@ -48,7 +48,6 @@ return function (App $app) {
                 'message' => 'The page you are looking for could not be found.'
             ])->withStatus(404);
         }
-        var_dump($exception);
         // For other errors, return the default error handler response
         return $errorHandler($request, $exception, $displayErrorDetails, $logErrors, $logErrorDetails);
     };
