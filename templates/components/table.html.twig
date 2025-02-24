@@ -2,13 +2,12 @@
 {% macro table(headers, rows, options) %}
 
     {% set opts = {
-        'hxget': null,
-        'hxtrigger': '',
+        'hx_get': null,
+        'hx_trigger': '#table-container',
         'current_page': 1,
         'total_pages': 0,
     }|merge(options|default({})) %}
 
-<div id="table-container" class="p-3" hx-get="/users/?page={{ opts.current_page }}" hx-trigger="loadContacts from:body">
     <table id="contacts-table"  class="table-responsive w-full rounded">
         <thead>
             <tr>
@@ -38,9 +37,9 @@
         </tbody>
     </table>
     {% if opts.total_pages > 1 %}
-    <div id="pagination-links" class="p-3" hx-boost="true" hx-target="#table-container" class="flex justify-center mt-4 space-x-2">
+    <div id="pagination-links" class="p-3" hx-target="{{ opts.hx_trigger }}" hx-swap="innerHTML" class="flex justify-center mt-4 space-x-2">
         {% if opts.current_page > 1 %}
-            <button class="px-4 py-2 bg-blue-500 text-white rounded-md" hx-get="/users/?page={{ opts.current_page - 1 }}">上一页</button>
+            <button class="px-4 py-2 bg-blue-500 text-white rounded-md" hx-get="{{ opts.hx_get }}?page={{ opts.current_page - 1 }}">上一页</button>
         {% endif %}
 
         {% if opts.total_pages <= 5 %}
@@ -48,14 +47,14 @@
                 {% if page == opts.current_page %}
                     <button class="px-4 py-2 bg-blue-500 text-white rounded-md" disabled>{{ page }}</button>
                 {% else %}
-                    <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md" hx-get="/users/?page={{ page }}">{{ page }}</button>
+                    <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md" hx-get="{{ opts.hx_get }}?page={{ page }}">{{ page }}</button>
                 {% endif %}
             {% endfor %}
         {% else %}
             {% if opts.current_page == 1 %}
                 <button class="px-4 py-2 bg-blue-500 text-white rounded-md" disabled>1</button>
             {% else %}
-                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md" hx-get="/users/?page=1">1</button>
+                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md" hx-get="{{ opts.hx_get }}?page=1">1</button>
             {% endif %}
 
             {% if opts.current_page > 4 %}
@@ -66,7 +65,7 @@
                 {% if page == opts.current_page %}
                     <button class="px-4 py-2 bg-blue-500 text-white rounded-md" disabled>{{ page }}</button>
                 {% else %}
-                    <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md" hx-get="/users/?page={{ page }}" >{{ page }}</button>
+                    <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md" hx-get="{{ opts.hx_get }}?page={{ page }}" >{{ page }}</button>
                 {% endif %}
             {% endfor %}
 
@@ -77,14 +76,13 @@
             {% if opts.current_page == opts.total_pages %}
                 <button class="px-4 py-2 bg-blue-500 text-white rounded-md" disabled>{{ opts.total_pages }}</button>
             {% else %}
-                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md" hx-get="/users/?page={{ opts.total_pages }}" >{{ opts.total_pages }}</button>
+                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md" hx-get="{{ opts.hx_get }}?page={{ opts.total_pages }}" >{{ opts.total_pages }}</button>
             {% endif %}
         {% endif %}
 
         {% if opts.current_page < opts.total_pages %}
-            <button class="px-4 py-2 bg-blue-500 text-white rounded-md" hx-get="/users/?page={{ opts.current_page + 1 }}">下一页</button>
+            <button class="px-4 py-2 bg-blue-500 text-white rounded-md" hx-get="{{ opts.hx_get }}?page={{ opts.current_page + 1 }}">下一页</button>
         {% endif %}
     </div>
     {% endif %}
-</div>
 {% endmacro %}
