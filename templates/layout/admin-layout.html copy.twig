@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+{% block head %}
+    <title>{% block title %}{% endblock %}</title>
+		<script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+		<script src="https://unpkg.com/htmx.org@2.0.4"></script>
+		<script src="//unpkg.com/alpinejs" defer></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<script src="/static/js/main.js?t=1"></script>
+		{% endblock %}
+	</head>
+	<body>
+		<div class="mx-auto bg-grey-400">
+			<!--Screen-->
+			<div class="min-h-screen flex flex-col">
+				<!--Header-->
+				{% include 'partials/header.html.twig' %}
+				<div class="flex flex-1">
+					<!--Sidebar-->
+					{% include 'partials/sidebar.html.twig' %}
+					<!--Main-->
+					{% block content %}{% endblock %}
+					<!--Main-->
+				</div>
+				<!--Footer-->
+				<footer class="bg-grey-darkest text-white p-2">
+						<div class="flex flex-1 mx-auto">&copy; My Design</div>
+				</footer>
+				<!--/footer-->
+			</div>
+		</div>
+		
+		{% block footer %}{% endblock %}
+	</body>
+</html>
