@@ -6,16 +6,26 @@ use PDO;
 
 
 /**
- * User Model
+ * Post Model
  * 
- * CREATE TABLE users (
- *  id INTEGER PRIMARY KEY AUTOINCREMENT,
- *  name VARCHAR(255) NOT NULL,
- *  email VARCHAR(255) UNIQUE NOT NULL,
- *  password VARCHAR(255) NOT NULL,
- *  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
- *  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
- * );
+* CREATE TABLE posts (
+*     id INTEGER PRIMARY KEY AUTOINCREMENT,
+*     title VARCHAR(255) NOT NULL,
+*     slug VARCHAR(255) UNIQUE NOT NULL,
+*     content TEXT,
+*     thumbnail VARCHAR(255),
+*     status VARCHAR(20) NOT NULL DEFAULT 'draft', -- draft, published, archived
+*     published_at DATETIME,
+*     category_id INTEGER,
+*     seo_title VARCHAR(255),
+*     seo_description TEXT,
+*     seo_keywords TEXT,
+*     seo_schema_json TEXT,
+*     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+*     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+*     yn INTEGER NOT NULL DEFAULT 1,
+*     FOREIGN KEY (category_id) REFERENCES categories(id)
+* );
  * 
  */
 

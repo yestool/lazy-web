@@ -7,8 +7,8 @@
   <style>
         /* 设置 SimpleMDE 编辑器的固定高度 */
         .CodeMirror, .CodeMirror-scroll {
-            height: 400px; /* 设置你想要的高度 */
-            overflow-y: auto; /* 添加垂直滚动条 */
+            min-height: 450px; /* 设置最小高度 */
+            max-height: 450px; /* 设置最大高度 */	
         }
   </style>
 {% endblock %}
@@ -23,14 +23,14 @@
 					<div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
 						Create Post
 					</div>
-					<div class="p-3">
-						<form class="w-full">
+					<div class="p-3" x-data="formHandler">
+						<form class="w-full"  @submit.prevent="submitForm">
 							<div class="flex flex-wrap -mx-3 mb-6">
 								<div class="w-full px-3">
 									<label class="block tracking-wide text-gray-700 text-xs font-light mb-1" for="title">
 										Title
 									</label>
-									<input id="title" type="text" placeholder="title" value="" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
+									<input id="title" x-model="title" type="text" placeholder="title" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
 								</div>
 							</div>
 							<div class="flex flex-wrap -mx-3 mb-6">
@@ -38,7 +38,15 @@
 									<label class="block tracking-wide text-grey-darker text-xs font-light mb-1" for="slug">
 										Slug
 									</label>
-									<input id="slug" type="text" placeholder="slug" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
+									<input id="slug" x-model="slug" type="text" placeholder="slug" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
+								</div>
+							</div>
+							<div class="flex flex-wrap -mx-3 mb-6">
+								<div class="w-full px-3">
+									<label class="block tracking-wide text-grey-darker text-xs font-light mb-1" for="thumbnail">
+										Thumbnail
+									</label>
+									<input id="thumbnail" x-model="thumbnail" type="text" placeholder="thumbnail" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
 								</div>
 							</div>
               <div class="flex flex-wrap -mx-3 mb-6">
@@ -49,22 +57,54 @@
 									<textarea id="markdown-editor"></textarea>
 								</div>
 							</div>
-							<div class="flex flex-wrap -mx-3 mb-2">
-								<div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-									<label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1" for="grid-city">
-										City
+							<div class="flex flex-wrap -mx-3 mb-6">
+								<div class="w-full px-3">
+									<label class="block tracking-wide text-grey-darker text-xs font-light mb-1" for="seo_title">
+										Seo Title
 									</label>
-									<input class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-city" type="text" placeholder="Albuquerque">
+									<input id="seo_title" x-model="seo_title" type="text" placeholder="seo title" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
 								</div>
-								<div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-									<label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1" for="grid-state">
-										State
+							</div>
+							<div class="flex flex-wrap -mx-3 mb-6">
+								<div class="w-full px-3">
+									<label class="block tracking-wide text-grey-darker text-xs font-light mb-1" for="seo_description">
+										Seo Description
+									</label>
+									<input id="seo_description" x-model="seo_description" type="text" placeholder="Seo Description" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
+								</div>
+							</div>
+							<div class="flex flex-wrap -mx-3 mb-6">
+								<div class="w-full px-3">
+									<label class="block tracking-wide text-grey-darker text-xs font-light mb-1" for="seo_keywords">
+										Seo Keywords
+									</label>
+									<input id="seo_keywords" x-model="seo_keywords" type="text" placeholder="Seo Description" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
+								</div>
+							</div>
+							<div class="flex flex-wrap -mx-3 mb-6">
+								<div class="w-full px-3">
+									<label class="block tracking-wide text-grey-darker text-xs font-light mb-1" for="seo_schema_json">
+										Seo Schema Json
+									</label>
+									<textarea id="seo_schema_json" x-model="seo_schema_json" name="seo_schema_json" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 h-45 leading-tight focus:outline-none focus:bg-white focus:border-grey"></textarea>
+								</div>
+							</div>
+							<div class="flex flex-wrap -mx-3 mb-6">
+								<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+									<label class="block tracking-wide text-grey-darker text-xs font-light mb-1" for="PublishedDate">
+										PublishedDate
+									</label>
+									<input id="published_at" type="datetime-local" x-model="published_at" placeholder="2025-02-25 00:10:10" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey">
+								</div>
+								<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+									<label class="block tracking-wide text-grey-darker text-xs font-light mb-1" for="status">
+										Status
 									</label>
 									<div class="relative">
-										<select class="block appearance-none w-full bg-grey-200 border border-grey-200 text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-state">
-											<option>New Mexico</option>
-											<option>Missouri</option>
-											<option>Texas</option>
+										<select id="status" x-model="status" class="block appearance-none w-full bg-grey-200 border border-grey-200 text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" >
+											<option value="draft">draft</option>
+											<option value="published">published</option>
+											<option value="archived">archived</option>
 										</select>
 										<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-grey-darker">
 											<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20">
@@ -73,11 +113,24 @@
 										</div>
 									</div>
 								</div>
-								<div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-									<label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1" for="grid-zip">
-										Zip
-									</label>
-									<input class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-zip" type="text" placeholder="90210">
+							</div>
+							<div class="flex items-center mx-auto border border-grey-200-mx-3 mb-6">
+								<div class="w-full">
+									<input type="search" class="w-full px-4 py-1 text-gray-800 rounded-full focus:outline-none" placeholder="search">
+								</div>
+								<div>
+									<button type="button" class="flex items-center bg-blue-500 justify-center w-12 h-12 text-white rounded-r-lg bg-gray-500 cursor-not-allowed">
+										<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+										</svg>
+									</button>
+								</div>
+							</div>
+							<div class="flex flex-wrap -mx-3 mb-6">
+								<div class="w-full px-3 text-center">
+									<button  type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+										Save
+									</button>
 								</div>
 							</div>
 						</form>
@@ -90,12 +143,58 @@
 	<!--/Main-->
 {% endblock %}
 
-
-
 {% block footer %}
   <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
   <script>
-      var simplemde = new SimpleMDE({ element: document.getElementById("markdown-editor"), spellChecker: false });
-  </script>
+    var simplemde = new SimpleMDE({ element: document.getElementById("markdown-editor"), spellChecker: false });
+		document.addEventListener('alpine:init', () => {
+			Alpine.data('formHandler', () => ({
+				title: '',
+				slug: '',
+				thumbnail: '',
+				content: '',
+				seo_title: '',
+				seo_description: '',
+				seo_keywords: '',
+				seo_schema_json: '',
+				published_at: '',
+				status: '',
+				init() {
+					
+				},
+				submitForm() {
+					this.content = simplemde.value();
+					const formData = new FormData();
+					formData.append('title', this.title);
+					formData.append('slug', this.slug);
+					formData.append('thumbnail', this.thumbnail);
+					formData.append('content', this.content);
+					formData.append('seo_title', this.seo_title);
+					formData.append('seo_description', this.seo_description);
+					formData.append('seo_keywords', this.seo_keywords);
+					formData.append('seo_schema_json', this.seo_schema_json);
+					formData.append('published_at', this.published_at);
+					formData.append('status', this.status);
 
+					console.log(this.content, this.status, this.published_at, this.title);
+
+					Swal.fire({
+						title: "保存成功",
+						icon: "success",
+						draggable: true
+					});
+
+					Swal.fire({
+						icon: "error",
+						title: "保存失败",
+						text: "Something went wrong!"
+					});
+					// fetch('/admin/posts', {
+					// 	method: 'POST',
+					// 	body: formData
+					// }).then(response => response.json())
+				}
+			}));
+    });
+  </script>
 {% endblock %}
