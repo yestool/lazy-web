@@ -1,7 +1,7 @@
 {% import 'components/table.html.twig' as table %}
 
 {% set headers = [
-    {'name': 'ID', class: 'border w-1/4 px-4 py-2'},
+    {'name': 'ID', class: 'border w-1/6 px-4 py-2'},
     {'name': '姓名', class: 'border w-1/6 px-4 py-2'},
 	{'name': '状态', class: 'border w-1/6 px-4 py-2'},
 	{'name': '操作', class: 'border w-1/6 px-4 py-2'}
@@ -9,16 +9,15 @@
 
 
 {% set statusMap = {
-    1: '对',
-    0: '错',
-    2: '待定',
-    3: '禁用'
+    'draft': '暂存',
+    'published': '已发布',
+    'archived': '以存档'
 } %}
 
 {% set newRows = data|map(row => {
     'id': row.id,
-    'name': row.name,
-    'isActive': statusMap[row.status]|default('对'),
+    'name': row.title,
+    'isActive': statusMap[row.status]|default('暂存'),
     'actions': [
         '<a href="/edit/' ~ row.id ~ '" class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white"><i class="fas fa-eye"></i></a>',
         '<a href="/delete/' ~ row.id ~ '" class="bg-red-500 cursor-pointer rounded p-1 mx-1 text-white"><i class="fas fa-trash"></i></a>',

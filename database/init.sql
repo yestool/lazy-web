@@ -19,15 +19,13 @@ CREATE TABLE posts (
     thumbnail VARCHAR(255),
     status VARCHAR(20) NOT NULL DEFAULT 'draft', -- draft, published, archived
     published_at DATETIME,
-    category_id INTEGER,
     seo_title VARCHAR(255),
     seo_description TEXT,
     seo_keywords TEXT,
     seo_schema_json TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    yn INTEGER NOT NULL DEFAULT 1,
-    FOREIGN KEY (category_id) REFERENCES categories(id)
+    yn INTEGER NOT NULL DEFAULT 1
 );
 
 
@@ -47,6 +45,15 @@ CREATE TABLE tags (
     slug VARCHAR(255) UNIQUE NOT NULL,
     yn INTEGER NOT NULL DEFAULT 1,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE post_categories (
+    post_id INTEGER,
+    category_id INTEGER,
+    yn INTEGER NOT NULL DEFAULT 1,
+    PRIMARY KEY (post_id, category_id),
+    FOREIGN KEY (post_id) REFERENCES posts(id),
+    FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 
 CREATE TABLE post_tags (

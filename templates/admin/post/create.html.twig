@@ -27,31 +27,29 @@
 						<form class="w-full"  @submit.prevent="submitForm">
 							<div class="flex flex-wrap -mx-3 mb-6">
 								<div class="w-full px-3">
-									<label class="block tracking-wide text-gray-700 text-xs font-light mb-1" for="title">
-										Title
-									</label>
-									<input id="title" x-model="title" type="text" placeholder="title" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
+									<label for="title" class="w-fit pl-0.5 text-sm">Title</label>
+    							<input id="title" x-model="formData.title" type="text" placeholder="title" name="title" autocomplete="title" class="w-full rounded-sm border border-neutral-300 bg-neutral-50 px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white" />
 								</div>
 							</div>
 							<div class="flex flex-wrap -mx-3 mb-6">
 								<div class="w-full px-3">
-									<label class="block tracking-wide text-grey-darker text-xs font-light mb-1" for="slug">
+									<label class="w-fit pl-0.5 text-sm" for="slug">
 										Slug
 									</label>
-									<input id="slug" x-model="slug" type="text" placeholder="slug" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
+									<input id="slug" x-model="formData.slug" type="text" placeholder="slug" class="w-full rounded-sm border border-neutral-300 bg-neutral-50 px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
 								</div>
 							</div>
 							<div class="flex flex-wrap -mx-3 mb-6">
 								<div class="w-full px-3">
-									<label class="block tracking-wide text-grey-darker text-xs font-light mb-1" for="thumbnail">
+									<label class="w-fit pl-0.5 text-sm" for="thumbnail">
 										Thumbnail
 									</label>
-									<input id="thumbnail" x-model="thumbnail" type="text" placeholder="thumbnail" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
+									<input id="thumbnail" x-model="formData.thumbnail" type="text" placeholder="thumbnail" class="w-full rounded-sm border border-neutral-300 bg-neutral-50 px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
 								</div>
 							</div>
               <div class="flex flex-wrap -mx-3 mb-6">
 								<div class="w-full px-3">
-									<label class="block tracking-wide text-grey-darker text-xs font-light mb-1" for="markdown-editor">
+									<label class="w-fit pl-0.5 text-sm" for="markdown-editor">
 										Content
 									</label>
 									<textarea id="markdown-editor"></textarea>
@@ -59,71 +57,107 @@
 							</div>
 							<div class="flex flex-wrap -mx-3 mb-6">
 								<div class="w-full px-3">
-									<label class="block tracking-wide text-grey-darker text-xs font-light mb-1" for="seo_title">
+									<label class="w-fit pl-0.5 text-sm" for="seo_title">
 										Seo Title
 									</label>
-									<input id="seo_title" x-model="seo_title" type="text" placeholder="seo title" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
+									<input id="seo_title" x-model="formData.seo_title" type="text" placeholder="seo title" class="w-full rounded-sm border border-neutral-300 bg-neutral-50 px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
 								</div>
 							</div>
 							<div class="flex flex-wrap -mx-3 mb-6">
 								<div class="w-full px-3">
-									<label class="block tracking-wide text-grey-darker text-xs font-light mb-1" for="seo_description">
+									<label class="w-fit pl-0.5 text-sm" for="seo_description">
 										Seo Description
 									</label>
-									<input id="seo_description" x-model="seo_description" type="text" placeholder="Seo Description" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
+									<input id="seo_description" x-model="formData.seo_description" type="text" placeholder="Seo Description" class="w-full rounded-sm border border-neutral-300 bg-neutral-50 px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
 								</div>
 							</div>
 							<div class="flex flex-wrap -mx-3 mb-6">
 								<div class="w-full px-3">
-									<label class="block tracking-wide text-grey-darker text-xs font-light mb-1" for="seo_keywords">
+									<label class="w-fit pl-0.5 text-sm" for="seo_keywords">
 										Seo Keywords
 									</label>
-									<input id="seo_keywords" x-model="seo_keywords" type="text" placeholder="Seo Description" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey">
+									<input id="seo_keywords" x-model="formData.seo_keywords" type="text" placeholder="Seo Description" class="w-full rounded-sm border border-neutral-300 bg-neutral-50 px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
 								</div>
 							</div>
 							<div class="flex flex-wrap -mx-3 mb-6">
 								<div class="w-full px-3">
-									<label class="block tracking-wide text-grey-darker text-xs font-light mb-1" for="seo_schema_json">
+									<label class="w-fit pl-0.5 text-sm" for="seo_schema_json">
 										Seo Schema Json
 									</label>
-									<textarea id="seo_schema_json" x-model="seo_schema_json" name="seo_schema_json" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 h-45 leading-tight focus:outline-none focus:bg-white focus:border-grey"></textarea>
+									<textarea id="seo_schema_json" x-model="formData.seo_schema_json" name="seo_schema_json" class="w-full rounded-sm border border-neutral-300 bg-neutral-50 px-2.5 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white" rows="3"></textarea>
 								</div>
 							</div>
 							<div class="flex flex-wrap -mx-3 mb-6">
 								<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-									<label class="block tracking-wide text-grey-darker text-xs font-light mb-1" for="PublishedDate">
+									<label class="w-fit pl-0.5 text-sm" for="PublishedDate">
 										PublishedDate
 									</label>
-									<input id="published_at" type="datetime-local" x-model="published_at" placeholder="2025-02-25 00:10:10" class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey">
+									<input id="published_at" x-model="formData.published_at" type="datetime-local"  placeholder="2025-02-25 00:10:10" class="w-full rounded-sm border border-neutral-300 bg-neutral-50 px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
 								</div>
 								<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-									<label class="block tracking-wide text-grey-darker text-xs font-light mb-1" for="status">
-										Status
-									</label>
-									<div class="relative">
-										<select id="status" x-model="status" class="block appearance-none w-full bg-grey-200 border border-grey-200 text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" >
-											<option value="draft">draft</option>
-											<option value="published">published</option>
-											<option value="archived">archived</option>
-										</select>
-										<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-grey-darker">
-											<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20">
-												<path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+									<div class="relative ">
+											<label for="status" class="w-fit pl-0.5 text-sm">Status</label>
+											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="absolute pointer-events-none right-4 top-8 size-5">
+												<path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
 											</svg>
-										</div>
+											<select id="status" name="status" x-model="formData.status"  class="w-full appearance-none rounded-sm border border-neutral-300 bg-neutral-50 px-4 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
+												<option value="draft">draft</option>
+												<option value="published">published</option>
+												<option value="archived">archived</option>
+											</select>
 									</div>
 								</div>
 							</div>
-							<div class="flex items-center mx-auto border border-grey-200-mx-3 mb-6">
-								<div class="w-full">
-									<input type="search" class="w-full px-4 py-1 text-gray-800 rounded-full focus:outline-none" placeholder="search">
-								</div>
-								<div>
-									<button type="button" class="flex items-center bg-blue-500 justify-center w-12 h-12 text-white rounded-r-lg bg-gray-500 cursor-not-allowed">
-										<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-										</svg>
-									</button>
+							<div class="flex flex-wrap -mx-3 mb-6">
+								<div class="w-full px-3">
+									<label class="w-fit pl-0.5 text-sm" for="seo_keywords">
+										Categories
+									</label>
+									<ul class="flex flex-wrap inline-flex min-w-52 items-center justify-between rounded-radius gap-3 border border-neutral-300 bg-neutral-50 px-4 py-2 text-base font-medium text-on-surface dark:border-outline-dark dark:bg-surface-dark-alt dark:text-on-surface-dark has-checked:text-on-surface-strong dark:has-checked:text-on-surface-dark-strong has-disabled:opacity-75 has-disabled:cursor-not-allowed">
+										<li class="flex items-center">
+											<input type="checkbox" id="option1" class="mr-2">
+											<label for="option1"> </label>
+										</li>
+										<li class="flex items-center">
+											<input type="checkbox" id="option2" class="mr-2">
+											<label for="option2">Option 2</label>
+										</li>
+										<li class="flex items-center">
+											<input type="checkbox" id="option3" class="mr-2">
+											<label for="option3">Option 3</label>
+										</li>
+										<li class="flex items-center">
+											<input type="checkbox" id="option4" class="mr-2">
+											<label for="option4">Option 4</label>
+										</li>
+										<li class="flex items-center">
+											<input type="checkbox" id="option5" class="mr-2">
+											<label for="option5">Option 5</label>
+										</li>
+										<li class="flex items-center">
+											<input type="checkbox" id="option6" class="mr-2">
+											<label for="option6">Option 6</label>
+										</li>
+										<li class="flex items-center">
+											<input type="checkbox" id="option7" class="mr-2">
+											<label for="option7">Option 7</label>
+										</li>
+										<li class="flex items-center">
+											<input type="checkbox" id="option8" class="mr-2">
+											<label for="option8">Option 8</label>
+										</li>
+										<li class="flex items-center">
+											<input type="checkbox" id="option9" class="mr-2">
+											<label for="option9">Option 9</label>
+										</li>
+										<li class="flex items-center">
+											<input type="checkbox" id="option10" class="mr-2">
+											<label for="option10">Option 10</label>
+										</li>
+									</ul>
+									
+
+
 								</div>
 							</div>
 							<div class="flex flex-wrap -mx-3 mb-6">
@@ -149,50 +183,59 @@
     var simplemde = new SimpleMDE({ element: document.getElementById("markdown-editor"), spellChecker: false });
 		document.addEventListener('alpine:init', () => {
 			Alpine.data('formHandler', () => ({
-				title: '',
-				slug: '',
-				thumbnail: '',
-				content: '',
-				seo_title: '',
-				seo_description: '',
-				seo_keywords: '',
-				seo_schema_json: '',
-				published_at: '',
-				status: '',
+				formData: {
+					title: '',
+					slug: '',
+					thumbnail: '',
+					content: '',
+					seo_title: '',
+					seo_description: '',
+					seo_keywords: '',
+					seo_schema_json: '',
+					published_at: '',
+					status: '',
+				},
+				
 				init() {
 					
 				},
 				submitForm() {
-					this.content = simplemde.value();
-					const formData = new FormData();
-					formData.append('title', this.title);
-					formData.append('slug', this.slug);
-					formData.append('thumbnail', this.thumbnail);
-					formData.append('content', this.content);
-					formData.append('seo_title', this.seo_title);
-					formData.append('seo_description', this.seo_description);
-					formData.append('seo_keywords', this.seo_keywords);
-					formData.append('seo_schema_json', this.seo_schema_json);
-					formData.append('published_at', this.published_at);
-					formData.append('status', this.status);
-
-					console.log(this.content, this.status, this.published_at, this.title);
-
-					Swal.fire({
-						title: "保存成功",
-						icon: "success",
-						draggable: true
+					this.formData.content = simplemde.value();
+					console.log(this.formData);
+					
+					fetch('/admin/post', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(this.formData)
+					})
+					.then(async (response) => {
+						if (!response.ok) {
+							// 尝试解析错误信息
+							const errorResponse = await response.json().catch(() => null);
+							const errorMsg = errorResponse?.message || `HTTP error! status: ${response.status}`;
+							throw new Error(errorMsg);
+						}
+						return response.json();
+					})
+					.then((data) => {
+						// 在这里处理成功逻辑，例如跳转页面或显示成功消息
+						Swal.fire({
+							title: "保存成功",
+							icon: "success",
+							draggable: true
+						});
+					})
+					.catch((error) => {
+						console.error("提交失败:", error);
+						// 在这里处理错误逻辑
+						Swal.fire({
+							icon: "error",
+							title: "保存失败",
+							text: `错误：${error.message}`
+						});
 					});
-
-					Swal.fire({
-						icon: "error",
-						title: "保存失败",
-						text: "Something went wrong!"
-					});
-					// fetch('/admin/posts', {
-					// 	method: 'POST',
-					// 	body: formData
-					// }).then(response => response.json())
 				}
 			}));
     });

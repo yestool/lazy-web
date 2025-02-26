@@ -6,46 +6,39 @@ use App\Models\Post;
 
 class PostService
 {
-  private Post $post;
+    private Post $post;
 
-  public function __construct(Post $post)
-  {
-    $this->post = $post;
-  }
-  public function getUserByEmail($email)
-  {
-    return $this->post->getUserByEmail($email);
-  }
+    public function __construct(Post $post)
+    {
+      $this->post = $post;
+    }
 
-  public function getAllUsers()
-  {
-    return $this->post->all();
-  }
 
-  public function getUserById($id)
+    public function getAllPosts()
+    {
+      return $this->post->all();
+    }
+
+    public function getPostById($id)
     {
         return $this->post->find($id);
-    }
-
-    public function createUser($data)
-    {
-        return $this->post->create($data);
-    }
-
-    public function updateUser($id, $data)
-    {
-        return $this->post->update($id, $data);
-    }
-
-    public function deleteUser($id)
-    {
-        return $this->post->delete($id);
     }
 
     public function createPost($data)
     {
         return $this->post->create($data);
     }
+
+    public function updatePost($id, $data)
+    {
+        return $this->post->update($id, $data);
+    }
+
+    public function deletePost($id)
+    {
+        return $this->post->delete($id);
+    }
+
     /**
      * 分页获取用户列表
      * 

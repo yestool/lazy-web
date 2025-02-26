@@ -37,6 +37,7 @@ return function (App $app) {
         $group->group('/post', function($group) {
             $group->get('', \App\Controllers\Admin\PostController::class. ':index')->setName('admin.posts.index');
             $group->get('/create', \App\Controllers\Admin\PostController::class. ':create')->setName('admin.posts.create');
+            $group->post('', \App\Controllers\Admin\PostController::class. ':store')->setName('admin.posts.store');
         });
     })->add(AuthMiddleware::class);
 };
