@@ -52,7 +52,7 @@
 									<label class="w-fit pl-0.5 text-sm" for="markdown-editor">
 										Content
 									</label>
-									<textarea id="markdown-editor"></textarea>
+									<textarea id="markdown-editor" data-content="{{ post.content|escape('html_attr') }}"></textarea>
 								</div>
 							</div>
 							<div class="flex flex-wrap -mx-3 mb-6">
@@ -184,20 +184,21 @@
 		document.addEventListener('alpine:init', () => {
 			Alpine.data('formHandler', () => ({
 				formData: {
-					title: '',
-					slug: '',
-					thumbnail: '',
+					title: '{{post.title}}',
+					slug: '{{post.slug}}',
+					thumbnail: '{{post.thumbnail}}',
 					content: '',
-					seo_title: '',
-					seo_description: '',
-					seo_keywords: '',
+					seo_title: '{{post.seo_title}}',
+					seo_description: '{{post.seo_description}}',
+					seo_keywords: '{{post.seo_keywords}}',
 					seo_schema_json: '',
-					published_at: '',
-					status: 'draft',
+					published_at: '{{post.published_at}}',
+					status: '{{post.status}}',
 				},
-				
 				init() {
-					
+					const markdownContent = document.getElementById('markdown-editor').dataset.content;
+					simplemde.value(markdownContent);
+					this.formData.seo_schema_json = String.raw`{{post.seo_schema_json|raw}}`;
 				},
 				submitForm() {
 					this.formData.content = simplemde.value();

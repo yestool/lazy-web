@@ -35,7 +35,7 @@ class Post
   private const SELECT_BASE = "SELECT * FROM posts WHERE yn=1";
   private const INSERT_SQL = <<<SQL
         INSERT INTO posts 
-        (title, slug, content, thumbnail, status, published_at, 
+        (title, slug, content, thumbnail, `status`, published_at, 
          seo_title, seo_description, seo_keywords, seo_schema_json) 
         VALUES 
         (:title, :slug, :content, :thumbnail, :status, :published_at, 
@@ -73,9 +73,9 @@ class Post
             'slug' => $data['slug'],
             'content' => $data['content'],
             'thumbnail' => $data['thumbnail'] ?? null,
-            'status' => $data['status'] ?? 'draft',
+            'status' => empty($data['status']) ? 'draft': $data['status'],
             'published_at' => $data['published_at'] ?? null,
-            'seo_title' => $data['seo_title'] ?? $data['title'],
+            'seo_title' => empty($data['seo_title']) ? $data['title'] : $data['seo_title'],
             'seo_description' => $data['seo_description'] ?? null,
             'seo_keywords' => $data['seo_keywords'] ?? null,
             'seo_schema_json' => $data['seo_schema_json'] ?? null

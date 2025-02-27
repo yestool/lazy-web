@@ -19,101 +19,112 @@ final class PostController extends Controller
         private LoggerInterface $logger
     ) {}
 
-  public function index(Request $request, Response $response): Response
-  {
-    $hxrequest = $request->getHeader('hx-target');
-    $page = $request->getQueryParams()['page'] ?? 1;
-    $this->logger->info('page: '. $page);
-    $users = $this->postService->paginate($page);
-    $this->logger->info('total_pages: '. $users['pagination']['last_page']);
+    public function index(Request $request, Response $response): Response
+    {
+        $hxrequest = $request->getHeader('hx-target');
+        $page = $request->getQueryParams()['page'] ?? 1;
+        $this->logger->info('page: '. $page);
+        $users = $this->postService->paginate($page);
+        $this->logger->info('total_pages: '. $users['pagination']['last_page']);
 
-    if ($hxrequest && $hxrequest[0] == 'table-container') {
-
-        
-        return $this->render($response, 'admin/post/partials/table.html.twig', [
+        if ($hxrequest && $hxrequest[0] == 'table-container') {
+            return $this->render($response, 'admin/post/partials/table.html.twig', [
+                'data' => $users['data'], 
+                'current_page' => $users['pagination']['current_page'], 
+                'total_pages' => $users['pagination']['last_page']
+            ]);
+        } 
+        return $this->render($response, 'admin/post/index.html.twig', [
             'data' => $users['data'], 
             'current_page' => $users['pagination']['current_page'], 
             'total_pages' => $users['pagination']['last_page']
         ]);
-    } 
-    return $this->render($response, 'admin/post/index.html.twig', [
-        'data' => $users['data'], 
-        'current_page' => $users['pagination']['current_page'], 
-        'total_pages' => $users['pagination']['last_page']
-    ]);
-  }
+    }
 
-  public function forms(Request $request, Response $response): Response
-  {
-      return $this->render($response, 'admin/forms.twig');
-  }
 
-  
-  public function tables(Request $request, Response $response): Response
-  {
-      return $this->render($response, 'admin/tables.twig');
-  }
+    public function create(Request $request, Response $response): Response
+    {
+        return $this->render($response, 'admin/post/create.html.twig');
+    }
 
-  public function buttons(Request $request, Response $response): Response
-  {
-      return $this->render($response, 'admin/buttons.twig');
-  }
+    public function edit(Request $request, Response $response, array $args): Response
+    {
+        $post = $this->postService->getPostById($args['id']);
+        
+        return $this->render($response, 'admin/post/edit.html.twig', ['post' => $post]);
+    }
 
-  public function ui(Request $request, Response $response): Response
-  {
-      return $this->render($response, 'admin/ui.twig');
-  }
+    public function store(Request $request, Response $response): Response
+    {
+        $data = $request->getParsedBody();
+        if (empty($data['title']) || empty($data['content'])) {
+            $errorResponse = [
+                'success' => false,
+                'message' => '标题和内容不能为空'
+            ];
+            $response->getBody()->write(json_encode($errorResponse));
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(400);
+        }
+        
+        
+        $published_at = empty($data['published_at']) ? CommonUtils::DateNow() : $data['published_at'] ;
+        $published_at = CommonUtils::DateFormat($published_at);
+        $this->logger->info('published_at: '. $published_at);
+        $this->logger->info('status: '. $data['status']);
 
-  public function modals(Request $request, Response $response): Response
-  {
-      return $this->render($response, 'admin/modals.twig');
-  }
+        $data['published_at'] = $published_at;
 
-  public function login(Request $request, Response $response): Response
-  {
-    return $this->render($response, 'admin/login.twig');
-  }
+        $articleId = $this->postService->createPost($data);
 
-  public function create(Request $request, Response $response): Response
-  {
-      return $this->render($response, 'admin/post/create.html.twig');
-  }
-
-  public function store(Request $request, Response $response): Response
-  {
-    $data = $request->getParsedBody();
-    if (empty($data['title']) || empty($data['content'])) {
-        $errorResponse = [
-            'success' => false,
-            'message' => '标题和内容不能为空'
+        // 处理数据（这里可以添加数据库操作等）
+        $article = [
+            'id' => $articleId,
         ];
-        $response->getBody()->write(json_encode($errorResponse));
+        
+        // 返回成功响应
+        $successResponse = [
+            'success' => true,
+            'message' => '文章创建成功',
+            'data' => $article
+        ];
+        $response->getBody()->write(json_encode($successResponse));
         return $response
             ->withHeader('Content-Type', 'application/json')
-            ->withStatus(400);
+            ->withStatus(200);
     }
-    
-    
-    $published_at = empty($data['published_at']) ? CommonUtils::DateNow() : $data['published_at'] ;
-    $published_at = CommonUtils::DateFormat($published_at);
-    $this->logger->info('published_at: '. $published_at);
-    $this->logger->info('title: '. $data['title']);
-    $articleId = $this->postService->createPost($data);
 
-    // 处理数据（这里可以添加数据库操作等）
-    $article = [
-        'id' => $articleId,
-    ];
-    
-    // 返回成功响应
-    $successResponse = [
-        'success' => true,
-        'message' => '文章创建成功',
-        'data' => $article
-    ];
-    $response->getBody()->write(json_encode($successResponse));
-    return $response
-        ->withHeader('Content-Type', 'application/json')
-        ->withStatus(201);
-  }
+    public function update(Request $request, Response $response, array $args): Response
+    {
+        $data = $request->getParsedBody();
+
+        if (empty($data['title']) || empty($data['content'])) {
+            $errorResponse = [
+                'success' => false,
+                'message' => '标题和内容不能为空'
+            ];
+            $response->getBody()->write(json_encode($errorResponse));
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(400);
+        }
+        $published_at = empty($data['published_at'])? CommonUtils::DateNow() : $data['published_at'] ;
+        $published_at = CommonUtils::DateFormat($published_at);
+        $this->logger->info('published_at: '. $published_at);
+        $this->logger->info('title: '. $data['title']);
+        $data['published_at'] = $published_at;
+
+        $this->postService->updatePost($args['id'], $data);
+
+        // 返回成功响应
+        $successResponse = [
+            'success' => true,
+            'message' => '文章更新成功'
+        ];
+        $response->getBody()->write(json_encode($successResponse));
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(200);
+    }
 }
