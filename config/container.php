@@ -9,7 +9,6 @@ use Odan\Session\SessionInterface;
 use Odan\Session\SessionManagerInterface;
 use App\Middlewares\AuthMiddleware;
 use Psr\Log\LoggerInterface;
-use App\Utils\ConsoleLogger;
 use App\Extensions\TwigExtension;
 
 return [
@@ -18,9 +17,6 @@ return [
     },
     'sessionConfig' => function (ContainerInterface $container) {
         return require __DIR__ . '/session.php';
-    },
-    LoggerInterface::class => function (ContainerInterface $container) {
-        return new ConsoleLogger();
     },
     App::class => function (ContainerInterface $container) {
 

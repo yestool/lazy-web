@@ -12,8 +12,7 @@ final class UserController extends Controller
 {
   public function __construct(
     protected Twig $twig,
-    private UserService $userService,
-    private LoggerInterface $logger
+    private UserService $userService
   ) {
 
   }
@@ -23,7 +22,6 @@ final class UserController extends Controller
     
     $hxrequest = $request->getHeader('hx-target');
     $page = $request->getQueryParams()['page'] ?? 1;
-    $this->logger->info('page: '. $page);
     $users = $this->userService->paginate($page);
 
     if ($hxrequest && $hxrequest[0] == 'table-container') {

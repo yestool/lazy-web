@@ -6,7 +6,6 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Odan\Session\SessionInterface;
 use Slim\Views\Twig;
-use Psr\Log\LoggerInterface;
 use App\Services\PostService;
 use App\Utils\CommonUtils;
 
@@ -15,17 +14,14 @@ final class PostController extends Controller
     public function __construct(
         protected Twig $twig,
         private SessionInterface $session,
-        private PostService $postService,
-        private LoggerInterface $logger
+        private PostService $postService
     ) {}
 
     public function index(Request $request, Response $response): Response
     {
         $hxrequest = $request->getHeader('hx-target');
         $page = $request->getQueryParams()['page'] ?? 1;
-        $this->logger->info('page: '. $page);
         $users = $this->postService->paginate($page);
-        $this->logger->info('total_pages: '. $users['pagination']['last_page']);
 
         if ($hxrequest && $hxrequest[0] == 'table-container') {
             return $this->render($response, 'admin/post/partials/table.html.twig', [
@@ -71,8 +67,7 @@ final class PostController extends Controller
         
         $published_at = empty($data['published_at']) ? CommonUtils::DateNow() : $data['published_at'] ;
         $published_at = CommonUtils::DateFormat($published_at);
-        $this->logger->info('published_at: '. $published_at);
-        $this->logger->info('status: '. $data['status']);
+
 
         $data['published_at'] = $published_at;
 
@@ -111,8 +106,7 @@ final class PostController extends Controller
         }
         $published_at = empty($data['published_at'])? CommonUtils::DateNow() : $data['published_at'] ;
         $published_at = CommonUtils::DateFormat($published_at);
-        $this->logger->info('published_at: '. $published_at);
-        $this->logger->info('title: '. $data['title']);
+
         $data['published_at'] = $published_at;
 
         $this->postService->updatePost($args['id'], $data);

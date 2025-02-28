@@ -15,8 +15,7 @@ class AuthController extends Controller
   public function __construct(
     protected Twig $twig,
     private UserService $userService,
-    private SessionInterface $session,
-    private LoggerInterface $logger
+    private SessionInterface $session
   ) {
 
   }

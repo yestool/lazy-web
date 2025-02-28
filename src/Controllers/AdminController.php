@@ -5,14 +5,12 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Odan\Session\SessionInterface;
 use Slim\Views\Twig;
-use Psr\Log\LoggerInterface;
 
 final class AdminController extends Controller
 {
     public function __construct(
         protected Twig $twig,
-        private SessionInterface $session,
-        private LoggerInterface $logger
+        private SessionInterface $session
     ) {}
 
   public function index(Request $request, Response $response): Response
