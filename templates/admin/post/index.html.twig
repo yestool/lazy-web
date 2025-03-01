@@ -2,71 +2,50 @@
 {% block title %}Admin Post{% endblock %}
 
 {% block content %}
-<!--/Main-->
-<main class="bg-white-500 flex-1 p-3 overflow-hidden">
-	<div class="flex flex-col">
-		<div class="flex flex-col md:flex-row lg:flex-row mx-2 mb-4">
-				<a href="/admin/post/create" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-						添加post
-				</a>
-		</div>
-		<!--Search form-->
-		<div class="flex flex-col md:flex-row lg:flex-row mx-2">
-			<div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
-				<div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
-					Search Form
-				</div>
-				<div class="p-3">
-					<form class="flex flex-col md:flex-row lg:flex-row mx-2">
-						<div class="mb-2 md:mr-2 md:mb-0">
-							<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Search">
-						</div>
-						<div class="mb-2 md:mr-2 md:mb-0">
-							<select class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-								<option>Select Course</option>
-								<option>MS</option>
-								<option>BS</option>
-								<option>BA</option>
-								<option>MBA</option>
+<div class="card">
+	<div class="card-body">
+			<div class="d-flex justify-content-between align-items-center mb-4">
+					<h5 class="card-title mb-0">文章列表</h5>
+					<a href="/admin/post/create" class="btn btn-primary">
+							<i class="bi bi-plus-lg"></i> 添加文章
+					</a>
+			</div>
+
+			<!-- 搜索和筛选 -->
+			<div class="row g-3 mb-4">
+					<div class="col-md-3">
+							<input type="text" class="form-control" placeholder="搜索产品名称/编号">
+					</div>
+					<div class="col-md-2">
+							<select class="form-select">
+									<option value="">产品分类</option>
+									<option value="1">电子产品</option>
+									<option value="2">服装</option>
+									<option value="3">食品</option>
 							</select>
-						</div>
-						<div class="mb-2 md:mr-2 md:mb-0">
-							<select class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-								<option>Select Status</option>
-								<option>Paid</option>
-								<option>Unpaid</option>
+					</div>
+					<div class="col-md-2">
+							<select class="form-select">
+									<option value="">库存状态</option>
+									<option value="in_stock">有库存</option>
+									<option value="low_stock">库存不足</option>
+									<option value="out_of_stock">无库存</option>
 							</select>
-						</div>
-						<div class="mb-2 md:mr-2 md:mb-0">
-							<select class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-								<option>Select Gender</option>
-								<option>Male</option>
-								<option>Female</option>
-							</select>
-						</div>
-						<div class="mb-2 md:mr-2 md:mb-0">
-							<button class="bg-teal-300 hover:bg-teal-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-								Search
+					</div>
+					<div class="col-md-2">
+							<button class="btn btn-secondary">
+									<i class="bi bi-search"></i> 搜索
 							</button>
-						</div>
-					</form>
-				</div>
+					</div>
 			</div>
-		</div>
-		<!--/Search form-->
-		<!--Grid Form-->
-		<div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
-			<div class="mb-2 border-solid border-gray-300 rounded  w-full">
-				<div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
-					Full Table
-				</div>
-				<div id="table-container" class="p-3 overflow-hidden w-full overflow-x-auto rounded-sm border border-neutral-300 dark:border-neutral-700">
-					{% include "admin/post/partials/table.html.twig" %} 
-				</div>
+
+			<!-- 产品列表表格 -->
+			<div id="table-container" class="row">
+				{% include "admin/post/partials/table.html.twig" %} 
+				
+				
+				
 			</div>
-		</div>
-		<!--/Grid Form-->
 	</div>
-</main>
-<!--/Main-->
+</div>
 {% endblock %}

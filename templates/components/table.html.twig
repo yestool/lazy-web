@@ -7,9 +7,9 @@
         'current_page': 1,
         'total_pages': 0,
     }|merge(options|default({})) %}
-
-    <table id="contacts-table"  class="w-full text-left text-sm text-on-surface dark:text-on-surface-dark">
-        <thead class="border-b border-outline bg-surface-alt text-sm text-on-surface-strong dark:border-outline-dark dark:bg-surface-dark-alt dark:text-on-surface-dark-strong">
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead>
             <tr>
                 {% for header in headers %}
                     <th scope="col" class="{{ header.class|raw }}">
@@ -18,11 +18,11 @@
                 {% endfor %}
             </tr>
         </thead>
-        <tbody class="divide-y divide-outline dark:divide-outline-dark">
+        <tbody>
             {% for row in rows %}
-            <tr class="even:bg-primary/5 dark:even:bg-primary-dark/10">
+            <tr>
                 {% for key, value in row %}
-                    <td class="border px-4 py-2">
+                    <td>
                         {{ value | raw }}
                     </td>
                 {% endfor %}
@@ -36,53 +36,60 @@
             {% endfor %}
         </tbody>
     </table>
+</div>
     {% if opts.total_pages > 1 %}
-    <div id="pagination-links" class="p-3" hx-target="{{ opts.hx_trigger }}" hx-swap="innerHTML" class="flex justify-center mt-4 space-x-2">
+    <nav class="d-flex justify-content-end" hx-target="{{ opts.hx_trigger }}" hx-boost="true"  hx-swap="innerHTML">
+        <ul class="pagination">
         {% if opts.current_page > 1 %}
-            <button class="cursor-pointer px-4 py-2 bg-blue-500 text-white rounded-md" hx-get="{{ opts.hx_get }}?page={{ opts.current_page - 1 }}">上一页</button>
+            <li class="page-item">
+                <a class="page-link" href="{{ opts.hx_get }}?page={{ opts.current_page - 1 }}"><i class="bi bi-chevron-left"></i></a>
+            </li>
         {% endif %}
 
         {% if opts.total_pages <= 5 %}
             {% for page in 1..opts.total_pages %}
                 {% if page == opts.current_page %}
-                    <button class="px-4 py-2 bg-blue-500 text-white rounded-md" disabled>{{ page }}</button>
+                    <li class="page-item active"><span class="page-link">{{ page }}</span></li>
                 {% else %}
-                    <button class="cursor-pointer px-4 py-2 bg-gray-200 text-gray-700 rounded-md" hx-get="{{ opts.hx_get }}?page={{ page }}">{{ page }}</button>
+                    <li class="page-item"><a class="page-link" href="{{ opts.hx_get }}?page={{ page }}">{{ page }}</a></li>
                 {% endif %}
             {% endfor %}
         {% else %}
             {% if opts.current_page == 1 %}
-                <button class="px-4 py-2 bg-blue-500 text-white rounded-md" disabled>1</button>
+                <li class="page-item active"><span class="page-link">1</span></li>
             {% else %}
-                <button class="cursor-pointer px-4 py-2 bg-gray-200 text-gray-700 rounded-md" hx-get="{{ opts.hx_get }}?page=1">1</button>
+                <li class="page-item"><a class="page-link" href="{{ opts.hx_get }}?page=1">1</a></li>
             {% endif %}
 
             {% if opts.current_page > 4 %}
-                <span class="px-4 py-2">...</span>
+                <li class="page-item"><span class="page-link">...</span></li>
             {% endif %}
 
             {% for page in (opts.current_page - 2 > 1 ? opts.current_page - 2 : 2)..(opts.current_page + 2 < opts.total_pages ? opts.current_page + 2 : opts.total_pages - 1) %}
                 {% if page == opts.current_page %}
-                    <button class="px-4 py-2 bg-blue-500 text-white rounded-md" disabled>{{ page }}</button>
+                    <li class="page-item active"><span class="page-link">{{ page }}</span></li>
                 {% else %}
-                    <button class="cursor-pointer px-4 py-2 bg-gray-200 text-gray-700 rounded-md" hx-get="{{ opts.hx_get }}?page={{ page }}" >{{ page }}</button>
+                    <li class="page-item"><a class="page-link" href="{{ opts.hx_get }}?page={{ page }}">{{ page }}</a></li>
                 {% endif %}
             {% endfor %}
 
             {% if opts.current_page < opts.total_pages - 3 %}
-                <span class="px-4 py-2">...</span>
+                <li class="page-item"><span class="page-link">...</span></li>
             {% endif %}
 
             {% if opts.current_page == opts.total_pages %}
-                <button class="px-4 py-2 bg-blue-500 text-white rounded-md" disabled>{{ opts.total_pages }}</button>
+                <li class="page-item active"><span class="page-link">{{ opts.total_pages }}</span></li>
             {% else %}
-                <button class="cursor-pointer px-4 py-2 bg-gray-200 text-gray-700 rounded-md" hx-get="{{ opts.hx_get }}?page={{ opts.total_pages }}" >{{ opts.total_pages }}</button>
+                <li class="page-item"><a class="page-link" href="{{ opts.hx_get }}?page={{ opts.total_pages }}">{{ opts.total_pages }}</a></li>
             {% endif %}
         {% endif %}
 
         {% if opts.current_page < opts.total_pages %}
-            <button class="cursor-pointer px-4 py-2 bg-blue-500 text-white rounded-md" hx-get="{{ opts.hx_get }}?page={{ opts.current_page + 1 }}">下一页</button>
+            <li class="page-item">
+                <a class="page-link" href="{{ opts.hx_get }}?page={{ opts.current_page + 1 }}"><i class="bi bi-chevron-right"></i></a>
+            </li>
         {% endif %}
-    </div>
+        </ul>
+    </nav>
     {% endif %}
 {% endmacro %}

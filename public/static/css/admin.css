@@ -1,0 +1,109 @@
+/* 布局相关样式 */
+.sidebar {
+  min-height: 100vh;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.main-content {
+  padding: 20px;
+}
+
+/* 响应式侧边栏 */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 250px;
+    z-index: 1000;
+    transition: 0.3s;
+    background-color: white;
+  }
+  .sidebar.show {
+    left: 0;
+  }
+  .sidebar-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+  }
+  .sidebar-backdrop.show {
+    display: block;
+  }
+}
+
+/* 导航链接样式 */
+.sidebar .nav-link {
+  color: #333;
+  padding: 0.8rem 1rem;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #f8f9fa;
+}
+
+.sidebar .nav-link.active {
+  background-color: #0d6efd;
+  color: white;
+}
+
+/* 卡片组件样式 */
+.card {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+/* 品牌标题样式 */
+.brand {
+  font-size: 1.75rem;
+  color: #0d6efd;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* 图片相关样式 */
+.preview-image {
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.product-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* 颜色预览样式 */
+.color-preview {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+/* 拖放区域样式 */
+.drag-drop-zone {
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  background: #f8f9fa;
+  cursor: pointer;
+}
+
+.drag-drop-zone:hover {
+  border-color: #0d6efd;
+  background: #f1f8ff;
+}
+
+/* 设置页面样式 */
+.settings-section {
+  margin-bottom: 2rem;
+}
