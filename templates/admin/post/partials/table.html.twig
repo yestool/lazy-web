@@ -1,10 +1,10 @@
 {% import 'components/table.html.twig' as table %}
 
 {% set headers = [
-    {'name': 'ID', class: 'px-4 py-2'},
-    {'name': '姓名', class: 'px-4 py-2'},
-	{'name': '状态', class: 'px-4 py-2'},
-	{'name': '操作', class: 'px-4 py-2'}
+    {'name': 'ID', class: ''},
+    {'name': '姓名', class: ''},
+	{'name': '状态', class: ''},
+	{'name': '操作', class: ''}
 ] %}
 
 
@@ -17,7 +17,7 @@
 {% set newRows = data|map(row => {
     'id': row.id,
     'name': row.title,
-    'isActive': statusMap[row.status]|default('暂存'),
+    'isActive': statusMap[row.status]|default('<span class="badge bg-success">暂存</span>'),
     'actions': [
         '<a href="/admin/post/' ~ row.id ~ '/edit" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>',
         '<a href="/delete/' ~ row.id ~ '" class="btn btn-sm btn-outline-danger ms-1"><i class="bi bi-trash"></i></a>'

@@ -32,7 +32,7 @@ class Post
 {
   private PDO $db;
 
-  private const SELECT_BASE = "SELECT * FROM posts WHERE yn=1";
+  private const SELECT_BASE = "SELECT * FROM posts WHERE yn=1 ORDER BY id DESC";
   private const INSERT_SQL = <<<SQL
         INSERT INTO posts 
         (title, slug, content, thumbnail, `status`, published_at, 
@@ -107,7 +107,7 @@ class Post
     public function paginate(int $page = 1, int $perPage = 10): array
     {
         $offset = ($page - 1) * $perPage;
-        $stmt = $this->db->prepare("SELECT * FROM posts WHERE yn=1 LIMIT :limit OFFSET :offset");
+        $stmt = $this->db->prepare("SELECT * FROM posts WHERE yn=1 ORDER BY id DESC LIMIT :limit OFFSET :offset");
         $stmt->execute(['limit' => $perPage, 'offset' => $offset]);
         $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         // 获取总记录数
