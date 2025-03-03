@@ -15,6 +15,7 @@ use PDO;
 *     content TEXT,
 *     thumbnail VARCHAR(255),
 *     status VARCHAR(20) NOT NULL DEFAULT 'draft', -- draft, published, archived
+*     is_pinned INTEGER NOT NULL DEFAULT 0,
 *     published_at DATETIME,
 *     seo_title VARCHAR(255),
 *     seo_description TEXT,
@@ -35,11 +36,21 @@ class Post
   private const SELECT_BASE = "SELECT * FROM posts WHERE yn=1 ORDER BY id DESC";
   private const INSERT_SQL = <<<SQL
         INSERT INTO posts 
-        (title, slug, content, thumbnail, `status`, published_at, 
+        (title, slug, content, thumbnail, status, is_pinned, published_at, 
          seo_title, seo_description, seo_keywords, seo_schema_json) 
         VALUES 
-        (:title, :slug, :content, :thumbnail, :status, :published_at, 
+        (:title, :slug, :content, :thumbnail, :status, :is_pinned, :published_at, 
          :seo_title, :seo_description, :seo_keywords, :seo_schema_json)
+    SQL;
+
+
+  private const UPDATE_SQL = <<<SQL
+        UPDATE posts
+        SET title = :title, slug = :slug, content = :content, thumbnail = :thumbnail,
+            status = :status, is_pinned = :is_pinned, published_at = :published_at,
+            seo_title = :seo_title, seo_description = :seo_description,
+            seo_keywords = :seo_keywords, seo_schema_json = :seo_schema_json
+        WHERE id = :id
     SQL;
 
   public function __construct(PDO $db)
@@ -74,6 +85,7 @@ class Post
             'content' => $data['content'],
             'thumbnail' => $data['thumbnail'] ?? null,
             'status' => empty($data['status']) ? 'draft': $data['status'],
+            'is_pinned' => $data['is_pinned'] ?? 0,
             'published_at' => $data['published_at'] ?? null,
             'seo_title' => empty($data['seo_title']) ? $data['title'] : $data['seo_title'],
             'seo_description' => $data['seo_description'] ?? null,
@@ -85,8 +97,21 @@ class Post
 
     public function update($id, $data)
     {
-        $stmt = $this->db->prepare("UPDATE posts SET name = :name, email = :email WHERE id = :id");
-        $stmt->execute(['id' => $id, 'name' => $data['name'], 'email' => $data['email']]);
+        $stmt = $this->db->prepare(self::UPDATE_SQL);
+        $stmt->execute([
+            'id' => $id,
+            'title' => $data['title'],
+            'slug' => $data['slug'],
+            'content' => $data['content'],
+            'thumbnail' => $data['thumbnail'] ?? null,
+            'status' => empty($data['status']) ? 'draft': $data['status'],
+            'is_pinned' => $data['is_pinned'] ?? 0,
+            'published_at' => $data['published_at'] ?? null,
+            'seo_title' => empty($data['seo_title']) ? $data['title'] : $data['seo_title'],
+            'seo_description' => $data['seo_description'] ?? null,
+            'seo_keywords' => $data['seo_keywords'] ?? null,
+            'seo_schema_json' => $data['seo_schema_json'] ?? null   
+        ]);
         return $stmt->rowCount();
     }
 

@@ -14,167 +14,158 @@
 {% endblock %}
 
 {% block content %}
-	<!--/Main-->
-	<main class="bg-white-500 flex-1 p-3 overflow-hidden">
-		<div class="flex flex-col">
-			<!--Grid Form-->
-			<div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
-				<div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
-					<div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
-						Create Post
+<!-- 添加文章 -->
+<div class="card">
+	<div class="card-body" x-data="formHandler">
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<h5 class="card-title mb-0">添加文章</h5>
+			<a href="/admin/post" class="btn btn-outline-secondary">
+				<i class="bi bi-arrow-left"></i> 返回列表
+			</a>
+		</div>
+
+		<form class="row g-3" @submit.prevent="submitForm">
+			<!-- 左侧：基本信息 -->
+			<div class="col-md-8">
+				<div class="card mb-3">
+					<div class="card-body">
+						<h5 class="card-title mb-4">文章信息</h5>
+						<div class="mb-3">
+							<label class="form-label">标题 <span class="text-danger">*</span></label>
+							<input id="title" x-model="formData.title"  type="text" class="form-control" required />
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<label class="form-label">Slug<span class="text-danger">*</span></label>
+								<input id="slug" x-model="formData.slug" type="text" class="form-control" placeholder="slug"  required/>
+							</div>
+							<div class="col-md-6">
+								<label class="form-label">状态 <span class="text-danger">*</span></label>
+								<select id="status" name="status" x-model="formData.status"  class="form-select" required>
+									<option value="draft">draft</option>
+									<option value="published">published</option>
+									<option value="archived">archived</option>
+								</select>
+							</div>
+						</div>
+
+
+						<div class="mb-3">
+							<label class="form-label">内容</label>
+							<textarea id="markdown-editor" class="form-control"></textarea>
+						</div>
+
+						<div class="mb-3">
+							<label class="form-label">标签</label>
+							<div class="input-group">
+								<input type="text" class="form-control" 	id="tag" />
+								<button class="btn btn-outline-secondary" 	type="button" id="addTag" >
+									添加标签
+								</button>
+							</div>
+							<div class="mt-2" id="colorList">
+								<span class="badge bg-primary me-1">标签1 <i class="bi bi-x"></i></span>
+								<span class="badge bg-primary me-1">标签2 <i class="bi bi-x"></i></span>
+								<span class="badge bg-primary me-1">标大手大脚签4 <i class="bi bi-x"></i></span>
+							</div>
+						</div>
+
+						
 					</div>
-					<div class="p-3" x-data="formHandler">
-						<form class="w-full"  @submit.prevent="submitForm">
-							<div class="flex flex-wrap -mx-3 mb-6">
-								<div class="w-full px-3">
-									<label for="title" class="w-fit pl-0.5 text-sm">Title</label>
-    							<input id="title" x-model="formData.title" type="text" placeholder="title" name="title" autocomplete="title" class="w-full rounded-sm border border-neutral-300 bg-neutral-50 px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white" />
-								</div>
-							</div>
-							<div class="flex flex-wrap -mx-3 mb-6">
-								<div class="w-full px-3">
-									<label class="w-fit pl-0.5 text-sm" for="slug">
-										Slug
-									</label>
-									<input id="slug" x-model="formData.slug" type="text" placeholder="slug" class="w-full rounded-sm border border-neutral-300 bg-neutral-50 px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
-								</div>
-							</div>
-							<div class="flex flex-wrap -mx-3 mb-6">
-								<div class="w-full px-3">
-									<label class="w-fit pl-0.5 text-sm" for="thumbnail">
-										Thumbnail
-									</label>
-									<input id="thumbnail" x-model="formData.thumbnail" type="text" placeholder="thumbnail" class="w-full rounded-sm border border-neutral-300 bg-neutral-50 px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
-								</div>
-							</div>
-              <div class="flex flex-wrap -mx-3 mb-6">
-								<div class="w-full px-3">
-									<label class="w-fit pl-0.5 text-sm" for="markdown-editor">
-										Content
-									</label>
-									<textarea id="markdown-editor"></textarea>
-								</div>
-							</div>
-							<div class="flex flex-wrap -mx-3 mb-6">
-								<div class="w-full px-3">
-									<label class="w-fit pl-0.5 text-sm" for="seo_title">
-										Seo Title
-									</label>
-									<input id="seo_title" x-model="formData.seo_title" type="text" placeholder="seo title" class="w-full rounded-sm border border-neutral-300 bg-neutral-50 px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
-								</div>
-							</div>
-							<div class="flex flex-wrap -mx-3 mb-6">
-								<div class="w-full px-3">
-									<label class="w-fit pl-0.5 text-sm" for="seo_description">
-										Seo Description
-									</label>
-									<input id="seo_description" x-model="formData.seo_description" type="text" placeholder="Seo Description" class="w-full rounded-sm border border-neutral-300 bg-neutral-50 px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
-								</div>
-							</div>
-							<div class="flex flex-wrap -mx-3 mb-6">
-								<div class="w-full px-3">
-									<label class="w-fit pl-0.5 text-sm" for="seo_keywords">
-										Seo Keywords
-									</label>
-									<input id="seo_keywords" x-model="formData.seo_keywords" type="text" placeholder="Seo Description" class="w-full rounded-sm border border-neutral-300 bg-neutral-50 px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
-								</div>
-							</div>
-							<div class="flex flex-wrap -mx-3 mb-6">
-								<div class="w-full px-3">
-									<label class="w-fit pl-0.5 text-sm" for="seo_schema_json">
-										Seo Schema Json
-									</label>
-									<textarea id="seo_schema_json" x-model="formData.seo_schema_json" name="seo_schema_json" class="w-full rounded-sm border border-neutral-300 bg-neutral-50 px-2.5 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white" rows="3"></textarea>
-								</div>
-							</div>
-							<div class="flex flex-wrap -mx-3 mb-6">
-								<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-									<label class="w-fit pl-0.5 text-sm" for="PublishedDate">
-										PublishedDate
-									</label>
-									<input id="published_at" x-model="formData.published_at" type="datetime-local"  placeholder="2025-02-25 00:10:10" class="w-full rounded-sm border border-neutral-300 bg-neutral-50 px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
-								</div>
-								<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-									<div class="relative ">
-											<label for="status" class="w-fit pl-0.5 text-sm">Status</label>
-											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="absolute pointer-events-none right-4 top-8 size-5">
-												<path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-											</svg>
-											<select id="status" name="status" x-model="formData.status"  class="w-full appearance-none rounded-sm border border-neutral-300 bg-neutral-50 px-4 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
-												<option value="draft">draft</option>
-												<option value="published">published</option>
-												<option value="archived">archived</option>
-											</select>
-									</div>
-								</div>
-							</div>
-							<div class="flex flex-wrap -mx-3 mb-6">
-								<div class="w-full px-3">
-									<label class="w-fit pl-0.5 text-sm" for="seo_keywords">
-										Categories
-									</label>
-									<ul class="flex flex-wrap inline-flex min-w-52 items-center justify-between rounded-radius gap-3 border border-neutral-300 bg-neutral-50 px-4 py-2 text-base font-medium text-on-surface dark:border-outline-dark dark:bg-surface-dark-alt dark:text-on-surface-dark has-checked:text-on-surface-strong dark:has-checked:text-on-surface-dark-strong has-disabled:opacity-75 has-disabled:cursor-not-allowed">
-										<li class="flex items-center">
-											<input type="checkbox" id="option1" class="mr-2">
-											<label for="option1"> </label>
-										</li>
-										<li class="flex items-center">
-											<input type="checkbox" id="option2" class="mr-2">
-											<label for="option2">Option 2</label>
-										</li>
-										<li class="flex items-center">
-											<input type="checkbox" id="option3" class="mr-2">
-											<label for="option3">Option 3</label>
-										</li>
-										<li class="flex items-center">
-											<input type="checkbox" id="option4" class="mr-2">
-											<label for="option4">Option 4</label>
-										</li>
-										<li class="flex items-center">
-											<input type="checkbox" id="option5" class="mr-2">
-											<label for="option5">Option 5</label>
-										</li>
-										<li class="flex items-center">
-											<input type="checkbox" id="option6" class="mr-2">
-											<label for="option6">Option 6</label>
-										</li>
-										<li class="flex items-center">
-											<input type="checkbox" id="option7" class="mr-2">
-											<label for="option7">Option 7</label>
-										</li>
-										<li class="flex items-center">
-											<input type="checkbox" id="option8" class="mr-2">
-											<label for="option8">Option 8</label>
-										</li>
-										<li class="flex items-center">
-											<input type="checkbox" id="option9" class="mr-2">
-											<label for="option9">Option 9</label>
-										</li>
-										<li class="flex items-center">
-											<input type="checkbox" id="option10" class="mr-2">
-											<label for="option10">Option 10</label>
-										</li>
-									</ul>
-									
+				</div>
 
 
-								</div>
-							</div>
-							<div class="flex flex-wrap -mx-3 mb-6">
-								<div class="w-full px-3 text-center">
-									<button  type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-										Save
-									</button>
-								</div>
-							</div>
-						</form>
+				<div class="card mb-3">
+					<div class="card-body">
+						<h5 class="card-title mb-4">SEO设置</h5>
+
+						<div class="mb-3">
+							<label class="form-label">页面标题</label>
+							<input id="seo_title" x-model="formData.seo_title" type="text" placeholder="Seo Title" class="form-control" />
+						</div>
+
+						<div class="mb-3">
+							<label class="form-label">Meta关键词</label>
+							<input id="seo_keywords" x-model="formData.seo_keywords" placeholder="Seo Keywords" type="text" class="form-control" />
+						</div>
+
+						<div class="mb-3">
+							<label class="form-label">Meta描述</label>
+							<textarea id="seo_description" x-model="formData.seo_description"  placeholder="Seo Description" type="text" class="form-control" rows="3"></textarea>
+						</div>
+
+
+						<div class="mb-3">
+							<label class="form-label">结构化数据</label>
+							<textarea id="seo_schema_json" x-model="formData.seo_schema_json" name="seo_schema_json" class="form-control" rows="3"></textarea>
+						</div>
+
+						
 					</div>
 				</div>
 			</div>
-			<!--/Grid Form-->
-		</div>
-	</main>
-	<!--/Main-->
+
+			<!-- 右侧：图片和其他设置 -->
+			<div class="col-md-4">
+				<div class="card mb-3">
+					<div class="card-body">
+						<h5 class="card-title mb-4">文章图片</h5>
+						<div class="mb-3">
+							<label class="form-label">主图</label>
+							<input id="thumbnail" x-model="formData.thumbnail" placeholder="thumbnail" @input="validateUrl" type="text" class="form-control" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">图片预览</label>
+							<div class="image-preview">
+								<img :src="imagePreview" class="img-fluid rounded" alt="预览图" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card mb-3">
+					<div class="card-body">
+						<h5 class="card-title mb-4">文章设置</h5>
+
+						<div class="mb-3">
+							<label class="form-label">置顶</label>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" x-model="formData.is_pinned" x-bind:checked="formData.is_pinned === 1 ? true : false" />
+								<label class="form-check-label" for="is_pinned">立即置顶</label>
+							</div>
+						</div>
+
+						<div class="mb-3">
+							<label class="form-label">发布时间</label>
+							<input id="published_at" x-model="formData.published_at" type="datetime-local" class="form-control mb-2"/>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+			<!-- 底部按钮 -->
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex justify-content-between">
+							<button type="button" class="btn btn-outline-secondary" onclick="history.back()">
+								<i class="bi bi-arrow-left"></i> 返回
+							</button>
+							<div>
+								<button type="submit" class="btn btn-primary">
+									保存
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
 {% endblock %}
 
 {% block footer %}
@@ -183,6 +174,8 @@
     var simplemde = new SimpleMDE({ element: document.getElementById("markdown-editor"), spellChecker: false });
 		document.addEventListener('alpine:init', () => {
 			Alpine.data('formHandler', () => ({
+				imagePreview: 'https://placehold.co/600x400',
+				isValidUrl: false,
 				formData: {
 					title: '',
 					slug: '',
@@ -194,13 +187,28 @@
 					seo_schema_json: '',
 					published_at: '',
 					status: 'draft',
+					is_pinned: 0,
 				},
 				
 				init() {
 					
 				},
+				validateUrl() {
+					try {
+						new URL(this.formData.thumbnail);
+						this.isValidUrl = true;
+					} catch (error) {
+						this.isValidUrl = false;
+					}
+					if (this.isValidUrl){
+						this.imagePreview = this.formData.thumbnail
+					}else{
+						this.imagePreview= 'https://placehold.co/600x400'
+					}
+				},
 				submitForm() {
 					this.formData.content = simplemde.value();
+					this.formData.is_pinned = this.formData.is_pinned ? 1 : 0;
 					console.log(this.formData);
 					
 					fetch('/admin/post', {
@@ -226,6 +234,7 @@
 							icon: "success",
 							draggable: true
 						});
+						window.location.href = '/admin/post'
 					})
 					.catch((error) => {
 						console.error("提交失败:", error);

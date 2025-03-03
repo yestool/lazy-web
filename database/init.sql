@@ -18,6 +18,7 @@ CREATE TABLE posts (
     content TEXT,
     thumbnail VARCHAR(255),
     status VARCHAR(20) NOT NULL DEFAULT 'draft', -- draft, published, archived
+    is_pinned INTEGER NOT NULL DEFAULT 0,
     published_at DATETIME,
     seo_title VARCHAR(255),
     seo_description TEXT,

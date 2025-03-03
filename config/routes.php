@@ -39,7 +39,7 @@ return function (App $app) {
             $group->get('/create', \App\Controllers\Admin\PostController::class. ':create')->setName('admin.posts.create');
             $group->post('', \App\Controllers\Admin\PostController::class. ':store')->setName('admin.posts.store');
             $group->get('/{id}/edit', \App\Controllers\Admin\PostController::class. ':edit')->setName('admin.posts.edit');
-            $group->put('/{id}', \App\Controllers\Admin\PostController::class. ':update')->setName('admin.posts.update');
+            $group->post('/{id}/edit', \App\Controllers\Admin\PostController::class. ':update')->setName('admin.posts.update');
             $group->delete('/{id}', \App\Controllers\Admin\PostController::class. ':delete')->setName('admin.posts.delete');
         });
     })->add(AuthMiddleware::class);
