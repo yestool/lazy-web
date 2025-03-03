@@ -46,8 +46,8 @@ class PostService
      * @param int $perPage 每页显示数量
      * @return array 包含用户数据和分页信息
      */
-    public function paginate(int $page = 1, int $perPage = 10): array
+    public function paginate(int $page = 1, int $perPage = 10, array $filters = []): array
     {
-      return $this->post->paginate($page, $perPage);
+      return $this->post->paginate($page, $perPage, $filters);
     }
 }

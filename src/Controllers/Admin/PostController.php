@@ -21,7 +21,17 @@ final class PostController extends Controller
     {
         $hxrequest = $request->getHeader('hx-target');
         $page = $request->getQueryParams()['page'] ?? 1;
-        $users = $this->postService->paginate($page);
+        $status = $request->getQueryParams()['status'] ?? '';
+        $title  = $request->getQueryParams()['title'] ?? '';
+        $filters = [];
+        if (!empty($status)) {
+            $filters['status'] = $status;
+        }
+        if (!empty($title)) {
+            $filters['title'] = ['operator' => 'LIKE', 'value' => '%'.$title.'%'];
+        }
+
+        $users = $this->postService->paginate($page, 10, $filters);
 
         if ($hxrequest && $hxrequest[0] == 'table-container') {
             return $this->render($response, 'admin/post/partials/table.html.twig', [

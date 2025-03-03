@@ -30,4 +30,4 @@
 
 
 
-{{ table.table(headers, newRows, { 'hx_get':'/admin/post','current_page': current_page, 'total_pages': total_pages }) }}
+{{ table.table(headers, newRows, { 'hx_get':'/admin/post','current_page': current_page, 'total_pages': total_pages , hx_include: 'searchForm' }) }}

@@ -12,32 +12,24 @@
 			</div>
 
 			<!-- 搜索和筛选 -->
-			<div class="row g-3 mb-4">
+			<form class="row g-3 mb-4" id="searchForm">
 					<div class="col-md-3">
-							<input type="text" class="form-control" placeholder="搜索产品名称/编号">
+							<input type="text" name="title" class="form-control" placeholder="标题">
 					</div>
 					<div class="col-md-2">
-							<select class="form-select">
-									<option value="">产品分类</option>
-									<option value="1">电子产品</option>
-									<option value="2">服装</option>
-									<option value="3">食品</option>
+							<select class="form-select" name="status" >
+									<option value="">状态</option>
+									<option value="draft">draft</option>
+									<option value="published">published</option>
+									<option value="archived">archived</option>
 							</select>
 					</div>
 					<div class="col-md-2">
-							<select class="form-select">
-									<option value="">库存状态</option>
-									<option value="in_stock">有库存</option>
-									<option value="low_stock">库存不足</option>
-									<option value="out_of_stock">无库存</option>
-							</select>
-					</div>
-					<div class="col-md-2">
-							<button class="btn btn-secondary">
+							<button class="btn btn-secondary" hx-get="/admin/post" hx-include="#searchForm" hx-target="#table-container">
 									<i class="bi bi-search"></i> 搜索
 							</button>
 					</div>
-			</div>
+			</form>
 
 			<!-- 文章列表表格 -->
 			<div id="table-container" class="row">

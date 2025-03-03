@@ -3,7 +3,7 @@
 
 return [
   'name' => 'my_app_session',
-  'lifetime' => 7200,
+  'lifetime' => 14400,
   'path' => '/',
   'domain' => null,
   'secure' => true,
@@ -16,6 +16,6 @@ return [
       'use_only_cookies' => 1,
       'cookie_secure' => 1,
       'cookie_samesite' => 'Strict',
-      'gc_maxlifetime' => 7200,
+      'gc_maxlifetime' => 14400,
   ]
 ];

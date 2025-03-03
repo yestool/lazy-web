@@ -3,6 +3,7 @@
 
     {% set opts = {
         'hx_get': null,
+        'hx_include': '',
         'hx_trigger': '#table-container',
         'current_page': 1,
         'total_pages': 0,
@@ -38,7 +39,7 @@
     </table>
 </div>
     {% if opts.total_pages > 1 %}
-    <nav class="d-flex justify-content-end" hx-target="{{ opts.hx_trigger }}" hx-boost="true"  hx-swap="innerHTML">
+    <nav class="d-flex justify-content-end" hx-target="{{ opts.hx_trigger }}" hx-boost="true" {{ opts.hx_include ? 'hx-include='~ ('#' ~ opts.hx_include) ~'' : '' }}  hx-swap="innerHTML">
         <ul class="pagination">
         {% if opts.current_page > 1 %}
             <li class="page-item">

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use PDO;
+use App\Utils\DbUtils;
 
 
 /**
@@ -129,14 +130,45 @@ class Post
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function paginate(int $page = 1, int $perPage = 10): array
+
+    public function paginate(int $page = 1, int $perPage = 10, array $filters = []): array
     {
+        // return DbUtils::Paginate(
+        //     $this->db,
+        //     table: 'posts',              // 表名
+        //     page: $page,                 // 当前页
+        //     perPage: $perPage,          // 每页数量
+        //     filters: $filters,          // 筛选条件
+        //     defaultConditions: ['yn=1'], // 默认条件
+        //     orderBy: 'id DESC'          // 排序规则
+        // );
+
         $offset = ($page - 1) * $perPage;
-        $stmt = $this->db->prepare("SELECT * FROM posts WHERE yn=1 ORDER BY id DESC LIMIT :limit OFFSET :offset");
-        $stmt->execute(['limit' => $perPage, 'offset' => $offset]);
+        $whereClauses = ['yn = 1']; // 默认条件
+        $params = [
+            'limit' => $perPage,
+            'offset' => $offset
+        ];
+        // 处理过滤条件
+        if (!empty($filters)) {
+            $wp = DbUtils::WhereClausesAndParams($filters, $whereClauses, $params);
+            $whereClauses = $wp['whereClauses'];
+            $params = $wp['params'];
+        }
+
+        // 构建SQL
+        $whereString = !empty($whereClauses) ? implode(' AND ', $whereClauses) : '1=1';
+        $sql = "SELECT * FROM posts  WHERE $whereString  ORDER BY id DESC  LIMIT :limit OFFSET :offset";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
         $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
         // 获取总记录数
-        $totalStmt = $this->db->query("SELECT COUNT(*) FROM posts WHERE yn=1");
+        $totalSql = "SELECT COUNT(*) FROM posts  WHERE $whereString";
+        $totalStmt = $this->db->prepare($totalSql);
+        $filterParams = $params;
+        unset($filterParams['limit'], $filterParams['offset']);
+        $totalStmt->execute($filterParams);
         $total = $totalStmt->fetchColumn();
 
         return [
@@ -148,5 +180,6 @@ class Post
                 'last_page' => ceil($total / $perPage)
             ]
         ];
+
     }
 }
