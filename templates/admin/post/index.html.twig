@@ -37,4 +37,35 @@
 			</div>
 	</div>
 </div>
+
 {% endblock %}
+
+
+
+{% block footer %}
+  <script>
+		document.addEventListener('DOMContentLoaded', () => {
+			// 获取所有删除按钮
+			const deleteButtons = document.querySelectorAll('.delete-btn');
+			// 为每个删除按钮添加事件监听
+			deleteButtons.forEach(button => {
+				button.addEventListener('htmx:afterRequest', (event) => {
+					// event.detail 包含请求的详细信息
+					const xhr = event.detail.xhr;           // XMLHttpRequest 对象
+					const successful = event.detail.successful; // 请求是否成功
+					if (successful) {
+						console.log(`删除成功`);
+					} else {
+						// 删除失败的情况
+						const response = JSON.parse(xhr.responseText); // 析后端返回的 JSON
+						console.log(response.message);
+						alert(response.message)
+						// 防止行被移除（如果不需要移除）
+						event.preventDefault(); // 可选：阻止默认行为
+					}
+				});
+			});
+	});
+  </script>
+{% endblock %}
+

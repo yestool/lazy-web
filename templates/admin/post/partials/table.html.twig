@@ -24,7 +24,7 @@
     'isPinned': row.is_pinned == 1 ? '✅':'',
     'actions': [
         '<a href="/admin/post/' ~ row.id ~ '/edit" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>',
-        '<a href="/delete/' ~ row.id ~ '" class="btn btn-sm btn-outline-danger ms-1"><i class="bi bi-trash"></i></a>'
+        '<a hx-confirm="确定要删除这条数据?" hx-post="/admin/post/' ~ row.id ~ '/delete" hx-target="closest tr"  hx-swap="delete"   class="delete-btn btn btn-sm btn-outline-danger ms-1" ><i class="bi bi-trash"></i></a>'
     ]|join(' ')
 }) %}
 

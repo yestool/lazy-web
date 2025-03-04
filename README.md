@@ -1,6 +1,12 @@
 # lazy-web
 
-安装ImageMagick库：
+
+## 上传项目使用
+
+tar -zcvf /pwd/lazy-web/lazy-web.tar.gz *
+
+
+## og依赖 安装ImageMagick库：
 
 ```
 sudo apt-get update

@@ -41,7 +41,7 @@ return function (App $app) {
             $group->post('', \App\Controllers\Admin\PostController::class. ':store')->setName('admin.posts.store');
             $group->get('/{id}/edit', \App\Controllers\Admin\PostController::class. ':edit')->setName('admin.posts.edit');
             $group->post('/{id}/edit', \App\Controllers\Admin\PostController::class. ':update')->setName('admin.posts.update');
-            $group->delete('/{id}', \App\Controllers\Admin\PostController::class. ':delete')->setName('admin.posts.delete');
+            $group->post('/{id}/delete', \App\Controllers\Admin\PostController::class. ':delete')->setName('admin.posts.delete');
         });
 
         $group->group('/setting', function($group) {

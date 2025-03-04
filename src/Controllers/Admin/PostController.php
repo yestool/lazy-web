@@ -131,4 +131,30 @@ final class PostController extends Controller
             ->withHeader('Content-Type', 'application/json')
             ->withStatus(200);
     }
+
+
+    public function delete(Request $request, Response $response, array $args): Response
+    {
+        if ($this->postService->deletePost($args['id'])) {
+            //返回成功响应
+            $successResponse = [
+                'success' => true,
+                'message' => '文章删除成功'
+            ];
+            $response->getBody()->write(json_encode($successResponse));
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(200);
+            
+        } else {
+            $errorResponse = [
+                'success' => false,
+                'message' => '文章删除失败'
+            ];
+            $response->getBody()->write(json_encode($errorResponse));
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(400);
+        }
+    }
 }
