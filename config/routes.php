@@ -42,5 +42,10 @@ return function (App $app) {
             $group->post('/{id}/edit', \App\Controllers\Admin\PostController::class. ':update')->setName('admin.posts.update');
             $group->delete('/{id}', \App\Controllers\Admin\PostController::class. ':delete')->setName('admin.posts.delete');
         });
+
+        $group->group('/setting', function($group) {
+            $group->get('', \App\Controllers\Admin\SettingController::class. ':index')->setName('admin.settings.index');
+            $group->post('', \App\Controllers\Admin\SettingController::class. ':store')->setName('admin.settings.store');
+        });
     })->add(AuthMiddleware::class);
 };

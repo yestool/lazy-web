@@ -16,7 +16,7 @@
 		<a class="nav-link" href="orders.html">
 			<i class="bi bi-cart me-2"></i>订单管理
 		</a>
-		<a class="nav-link" href="settings.html">
+		<a class="nav-link {% if is_active('/setting') %}active{% endif %}" href="/admin/setting">
 			<i class="bi bi-gear me-2"></i>系统设置
 		</a>
 	</nav>
