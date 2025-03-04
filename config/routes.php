@@ -5,6 +5,7 @@ use App\Middlewares\AuthMiddleware;
 
 return function (App $app) {
     $app->get('/', [\App\Controllers\HomeController::class, 'index'])->setName('home.index');
+    $app->get('/og-image/', [\App\Controllers\HomeController::class, 'ogImage'])->setName('home.ogImage');
     $app->get('/users/', [\App\Controllers\UserController::class, 'index'])->setName('users.index');
 
     $app->get('/users/create/', \App\Controllers\UserController::class . ':create');
