@@ -25,9 +25,34 @@ final class HomeController extends Controller
         // 输出复杂数据
         $array = ["name" => "Grok", "version" => 3];
         $logger->info($array);
+$markdown = <<<MARKDOWN
+
+搭建框架的空间是看得见封建士大夫可[适当](https://baidu.com)加分考生的非军事对抗肌肤多数发
+
+[TOC]
+
+# 第一章
+[button class="btn" id="btn1" ]跳转[/button]
+
+
+
+
+## 第一节
+[alert  class="alert alert-info" id="alert"]这是一个提示[/alert]
+
+# 第二章
+正文内容
+
+
+| Header 1 | Header 2 | Header 3 |
+| -------- | -------- | -------- |
+| Row 1    | Data     | Data     |
+| Row 2    | Data     | Data     |
+MARKDOWN;
 
         return $this->render($response, 'home.twig',[
             'name' => 'John',
+            'md' => $markdown
         ]);
     }
 

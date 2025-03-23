@@ -8,15 +8,18 @@ use Odan\Session\PhpSession;
 use Odan\Session\SessionInterface;
 use Odan\Session\SessionManagerInterface;
 use App\Middlewares\AuthMiddleware;
-use Psr\Log\LoggerInterface;
 use App\Extensions\TwigExtension;
+use App\MdExt\CombinedExtensions;
 
 return [
     'settings' => function () {
         return require __DIR__ . '/settings.php';
     },
-    'sessionConfig' => function (ContainerInterface $container) {
+    'sessionConfig' => function () {
         return require __DIR__ . '/session.php';
+    },
+    CombinedExtensions::class => function () {
+        return new CombinedExtensions();
     },
     App::class => function (ContainerInterface $container) {
 
@@ -57,7 +60,8 @@ return [
     },
     Twig::class => function (ContainerInterface $container) {
         $twig = Twig::create(__DIR__ . '/../templates', ['cache' => false]);
-        $twig->addExtension(new TwigExtension());
+        $combinedExtensions = $container->get(CombinedExtensions::class);
+        $twig->addExtension(new TwigExtension($combinedExtensions));
         $twig->getEnvironment()->addGlobal('session', $container->get(SessionInterface::class));
         return $twig;
     },

@@ -3,10 +3,25 @@
 namespace App\Extensions;
 
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
+use App\MdExt\CombinedExtensions;
 
 class TwigExtension extends AbstractExtension
 {
+    private $combinedExtensions;
+    
+    public function __construct(CombinedExtensions $combinedExtensions)
+    {
+        $this->combinedExtensions = $combinedExtensions;
+    }
+    public function getFilters()
+    {
+        return [
+            new TwigFilter('markdown', [$this, 'parseMarkdown'], ['is_safe' => ['html']])
+        ];
+    }
+
     public function getFunctions()
     {
         return [
@@ -31,5 +46,10 @@ class TwigExtension extends AbstractExtension
             return false;
         }
         return strpos($uri, $paths) === 0 && $paths !== '/';
+    }
+
+    public function parseMarkdown($markdown)
+    {
+        return $this->combinedExtensions->text($markdown);
     }
 }
