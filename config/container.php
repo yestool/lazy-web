@@ -32,8 +32,9 @@ return [
 
         return $app;
     },
-    PDO::class => function () {
-        $pdo = new PDO('sqlite:' . __DIR__ . '/../database/database.sqlite');
+    PDO::class => function (ContainerInterface $container) {
+        $settings = $container->get('settings');
+        $pdo = new PDO($settings['DB']);
         return $pdo;
     },
     SessionInterface::class => function (ContainerInterface $container) {
@@ -59,10 +60,13 @@ return [
         return $container->get(SessionInterface::class);
     },
     Twig::class => function (ContainerInterface $container) {
+        $settings = $container->get('settings');
         $twig = Twig::create(__DIR__ . '/../templates', ['cache' => false]);
         $combinedExtensions = $container->get(CombinedExtensions::class);
         $twig->addExtension(new TwigExtension($combinedExtensions));
         $twig->getEnvironment()->addGlobal('session', $container->get(SessionInterface::class));
+        $twig->getEnvironment()->addGlobal('SITE_URL', $settings['SITE_URL']);
+        $twig->getEnvironment()->addGlobal('SITE_NAME', $settings['SITE_NAME']);
         return $twig;
     },
     AuthMiddleware::class => function (ContainerInterface $container) {
