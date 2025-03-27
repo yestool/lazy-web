@@ -3,14 +3,12 @@
 use Slim\App;
 use Slim\Middleware\MethodOverrideMiddleware;
 use Slim\Views\Twig;
-use Slim\Views\TwigMiddleware;
-use Slim\Middleware\ErrorMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
-use Slim\Exception\HttpException;
 use Odan\Session\Middleware\SessionStartMiddleware;
-use App\Middlewares\SessionMiddleware;
 use App\Middlewares\TrailingSlashMiddleware;
+use App\Middlewares\MyTwigMiddleware;
+use App\Middlewares\HtmlMinifyMiddleware;
 
 return function (App $app) {
     // Parse json, form data and xml
@@ -83,6 +81,8 @@ return function (App $app) {
 
     $app->add(SessionStartMiddleware::class);
 
+    $app->add(MyTwigMiddleware::class);
 
+    $app->add(HtmlMinifyMiddleware::class);
     
 };
